@@ -24,9 +24,9 @@ function DetailInfo( {onShow, onClose}:any ) {
     )
 }
 function Info( {onMode}:any ) {
-    const [show, setShow] = useState<string>('50%');
+    const [show, setShow] = useState<string>('100%');
     const upNdown=()=>{
-        let up = '50%';
+        let up = '0';
         let down = '100%'
         setShow( (prev) => {
             if(prev === up){
@@ -115,9 +115,13 @@ function Main() {
             <div id="layout" className="layout">
                 <Header/>
                 <body>
-                    <Click getRef={ block1 } chaState={( id: String )=>{ folder(id) }}/>
-                    <View getRef={ block2 } onMode={ mode }/>
-                    <Info  getRef={ block3 } onMode={ !mode }/>
+                    <div className="center">
+                        <Click getRef={ block1 } chaState={( id: String )=>{ folder(id) }}/>
+                        <View getRef={ block2 } onMode={ mode }/>
+                        <Info  getRef={ block3 } onMode={ !mode }/>
+
+                    </div>
+
                     
                 </body>
                 {/* <RestA/> */}
