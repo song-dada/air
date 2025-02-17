@@ -1,0 +1,102 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+#layout{
+    header{
+        width: 100%;
+        height: 60px;
+        background-color: aqua;
+
+    }
+    body{
+        display: flex;
+        width: 100%;
+        height: calc(1080px - 60px - 40px - 12px);
+    }
+    footer{
+        width: 100%;
+        height: 40px;
+        background-color: aqua;
+    }
+
+
+
+    // display: flex;
+    // .click{
+    //     background-color: #00f;
+    //     width: 300px;
+    //     height: 400px;
+    //     overflow: hidden;
+    // }
+    // .view{
+    //     background-color: #0ff;
+    //     // width: 300px;
+    //     height: 400px;
+    //     overflow: hidden;
+    //     transition:
+    //         width 1000ms,
+    //         transform 200ms linear
+    //     ;
+    //     .prevMap{
+    //         background-color: #f00;
+    //         width: 300px;
+    //         height: 150px;
+    //     }
+    //     .nowMap{
+    //         background-color: #0f0;
+    //         width: 300px;
+    //         height: 150px;
+    //     }
+    // }
+    // .infoA{
+    //     position: relative;
+    //     overflow: hidden;
+    //     .info{
+    //         background-color: #f0f;
+    //         // width: 300px;
+    //         height: 400px;
+    //         overflow: hidden;
+    //         transition:
+    //             width 1000ms,
+    //         ;
+    //         display: flex;
+    //         flex-wrap: wrap;
+    //         gap: 10px;
+    //         .infoItem{
+    //             width: 90px;
+    //             height: 90px;
+    //             background-color: #ff0;
+    //         }
+            
+    //     }
+    //     .detailInfo{
+    //         width: 100%;
+    //         height: 100%;
+    //         background-color: #7451d4;
+    //         position: absolute;
+    //         top: 0;
+    //         left: 0;
+    //         transition:
+    //             top 1000ms,
+    //         ;
+    //     }
+    // }
+    // .true{
+    //     width: 300px;
+    // }
+    // .false{
+    //     width: 0;
+    // }
+    
+    // .view.true{
+    //     transform: translateX(0);
+    //     z-index: -1;
+    // }
+    // .view.false{
+    //     transform: translateX(-30%);
+    //     z-index: -1;
+    // }
+    
+}
