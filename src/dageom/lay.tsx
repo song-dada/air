@@ -1,6 +1,8 @@
-import React, {useState, useEffect, useRef} from 'react'
-import './sass/lay.scss'
-import RestA from './rest/test'
+import React, {useState, useEffect, useRef} from 'react';
+import './sass/lay.scss';
+import RestA from './rest/test';
+import CircleP from './gpt/circle';
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 
 type ClickProps = {
@@ -22,6 +24,26 @@ function DetailInfo( {onShow, onClose}:any ) {
             <button type="button" className="closeBtn" onClick={()=> onClose() }>close</button>
             <LegendRow/>
         </div>
+    )
+}
+function InfoItem():any {
+    const data:any = null;
+    return(
+        <>
+            <div className="infoItem">
+                {/* <progress id={"PM25"} value={'null'} max={1}></progress>
+                <progress value={data} /> */}
+                {/* <div className="progress-container">
+                    <div className="progress-background" />
+                    <div
+                        className="progress-bar"
+                        style={{ transform: `rotate(${(percentage / 100) * 180 - 90}deg)` }}
+                    />
+                    <div className="progress-text">{percentage}%</div>
+                </div> */}
+                <CircleP/>
+            </div>
+        </>
     )
 }
 function Info( {onMode}:any ) {
@@ -50,13 +72,18 @@ function Info( {onMode}:any ) {
             <>
                 <div className={`infoA ${onMode}`}>
                     <div className="address">
-                        <h2>지역 지역</h2>
-                        <h3>날짜 날짜</h3>
-                        <p>세부지역 위치는 어디라고 해야하지</p>
+                        <div>
+                            <h2>지역 지역</h2>
+                            <h3>날짜 날짜</h3>
+                            <p>세부지역 위치는 어디라고 해야하지</p>
+
+                        </div>
+                        <button type="button"><IoMdArrowRoundBack /></button>
                     </div>
                     <div className={`info`}>
                     <h3>오늘의 미세먼지</h3>
-                        <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 1 </div>
+                        <InfoItem></InfoItem>
+                        {/* <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 1 </div> */}
                         <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 2 </div>
                     <h3>오늘의 대기질</h3>
                         <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 3 </div>
