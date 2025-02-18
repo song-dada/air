@@ -19,7 +19,8 @@ function DetailInfo( {onShow, onClose}:any ) {
     return(
         <div className={`detailInfo`} ref={showObj}>
             일단 이게 위로 올라오고 내려오는???
-            <button type="button" onClick={()=> onClose() }>close</button>
+            <button type="button" className="closeBtn" onClick={()=> onClose() }>close</button>
+            <LegendRow/>
         </div>
     )
 }
@@ -41,39 +42,71 @@ function Info( {onMode}:any ) {
             return '100%';
         });
     }
-    
+    if(!onMode){
+        return null;
+    }
+    else{
+        return(
+            <>
+                <div className={`infoA ${onMode}`}>
+                    <div className="address">
+                        <h2>지역 지역</h2>
+                        <h3>날짜 날짜</h3>
+                        <p>세부지역 위치는 어디라고 해야하지</p>
+                    </div>
+                    <div className={`info`}>
+                    <h3>오늘의 미세먼지</h3>
+                        <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 1 </div>
+                        <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 2 </div>
+                    <h3>오늘의 대기질</h3>
+                        <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 3 </div>
+                        <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 4 </div>
+                        <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 5 </div>
+                        <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 6 </div>
+                    </div>
+                    {/* <div className="legend">범례</div> */}
+                    <LegendRow/>
+                    <DetailInfo onShow={show} onClose={ close }/>
+                </div>
+            
+            </>
+        )
+    }
+}
+function LegendRow(){
     return(
         <>
-            <div className={`infoA ${onMode}`}>
-                <div className={`info`}>
-                    {/* 접었다 사라졌다 아이템 박스영역*/}
-                    <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 1 </div>
-                    <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 2 </div>
-                    <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 3 </div>
-                    <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 4 </div>
-                    <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 5 </div>
-                    <div className="infoItem" onClick={ ()=> { upNdown(); } }> 데이터 6 </div>
-                </div>
-                <DetailInfo onShow={show} onClose={ close }/>
-            </div>
-        
+            <div className="legend">범례</div>
+
         </>
+
     )
 }
 function View( {onMode}:any ) {
-    return(
-        <>
-            <div className={`view ${onMode}`}>
+    if(!onMode){
+        return null;
+    }
+    else{
+        return(
+            <>
+                <div className={`view ${onMode}`}>
 
-                <div className="alertArea"> 알림</div>
-                <div className="radarArea">
-                    <div className="prevMap">이전 대기질</div>
-                    <div className="nowMap">현재 대기질</div>
+                    <div className="alertArea">
+                        <div className="alert">미세먼지 경보</div>
+                        <div className="alert">초미세먼지 경보</div>
+                        <div className="alert doit">행동 요령</div>
+                        
+                    </div>
+                    <div className="radarArea">
+                        <div className="graphBar">범례</div>
+                        <div className="nowMap">현재 대기질</div>
+                        <div className="prevMap">예상 대기질</div>
+                    </div>
                 </div>
-            </div>
-        
-        </>
-    )
+            
+            </>
+        )
+    }
 }
 function Click( {chaState, getRef}: ClickProps ) {
     return(
