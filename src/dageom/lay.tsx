@@ -3,6 +3,7 @@ import './sass/lay.scss';
 import RestA from './rest/test';
 import CircleP from './gpt/circle';
 import { IoMdArrowRoundBack } from "react-icons/io";
+import Header from '../hyomin/header/header'
 
 
 type ClickProps = {
@@ -146,13 +147,13 @@ function Click( {chaState, getRef}: ClickProps ) {
     )
     
 }
-function Header() {
-    return(
-        <header>
-            로고, 메뉴, 셀렉트 박스
-        </header>
-    )
-}
+// function Header() {
+//     return(
+//         <header>
+//             로고, 메뉴, 셀렉트 박스
+//         </header>
+//     )
+// }
 function Footer() {
     return(
         <footer>
