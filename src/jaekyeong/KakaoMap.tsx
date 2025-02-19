@@ -66,7 +66,7 @@ export const KakaoMap = () => {
   
   const options = {
     center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 서울 중심
-    level: 12, // 전국 단위로 시작
+    level: 11, // 전국 단위로 시작
     zoomControl: true,
     zoomControlPosition: window.kakao.maps.ControlPosition.RIGHT
   };

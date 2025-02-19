@@ -1,6 +1,7 @@
 {
   "name": "name",
   "version": "0.1.0",
+  "proxy": "http://kkms4001.iptime.org:21168",
   "private": true,
   "dependencies": {
     "cra-template-typescript": "1.2.0",
