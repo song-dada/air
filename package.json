@@ -1,8 +1,10 @@
 {
   "name": "name",
   "version": "0.1.0",
+  "proxy": "http://kkms4001.iptime.org:21168",
   "private": true,
   "dependencies": {
+    "alasql": "^4.6.3",
     "cra-template-typescript": "1.2.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

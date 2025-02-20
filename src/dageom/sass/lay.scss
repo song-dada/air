@@ -4,12 +4,12 @@
     padding: 0;
 }
 #layout{
-    header{
-        width: 100%;
-        height: 60px;
-        background-color: aqua;
+    // header{
+    //     width: 100%;
+    //     height: 60px;
+    //     background-color: aqua;
 
-    }
+    // }
     body{
         // display: flex;
         width: 100%;
@@ -22,11 +22,21 @@
             margin: auto;
             display: flex;
             padding-top: 30px;
+            background-color: red;
+
             .click{
                 width: 800px;
                 background-color: red;
                 height: 800px;
                 overflow: hidden;
+                div{
+                    width: 800px;
+                    h2{
+                        width: 400px;
+                        background-color: red;
+
+                    }
+                }
 
             }
             .view{
@@ -36,13 +46,13 @@
                 padding: 20px;
                 overflow: hidden;
                 .alertArea{
-                    .alert{
-                        display: inline-block;
-                        width: 170px;
-                        height: 170px;
-                        background-color: aqua;
-                        margin-right: 20px;
-                    }
+                    // .alert{
+                    //     display: inline-block;
+                    //     width: 170px;
+                    //     height: 170px;
+                    //     background-color: aqua;
+                    //     margin-right: 20px;
+                    // }
                     .doit{
                         width: 340px;
                         margin-right: 0;
@@ -83,7 +93,19 @@
                 overflow: hidden;
                 .address{
                     background-color: antiquewhite;
-                
+                    width: calc(800px - 40px - 40px);
+                    div{
+                        display: inline-block;
+                        h2,h3,p{
+                            width: calc(800px - 40px - 170px);
+                        }
+                    }
+                    button{
+                        // display: inline-block;
+                        float: right;
+                        width: 50px;
+                        height: 50px;
+                    }
                 }
                 .info{
                     margin-top: 20px;
