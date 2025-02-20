@@ -1,4 +1,4 @@
-@import '../setting/base.scss';
+@import '../setting/color.scss';
 
 .upArea {
     width: 100%;
@@ -27,7 +27,7 @@
         justify-content: center;
         flex-direction: column;
         
-        background-color: white;
+        background-color: $color-alertBG;
         border: 10px solid $color-alert;
         // border-radius: 15px;
 
@@ -63,7 +63,7 @@
         align-items: center;
         justify-content: start;
 
-        background-color: aliceblue;
+        background-color: $color-alertBG;
         border-radius: 15px;
     }
     .tipMessage::after {
@@ -74,7 +74,7 @@
         width: 0;
         height: 0;
         border: 20px solid transparent;
-        border-top-color: aliceblue;
+        border-top-color: $color-alertBG;
         border-bottom: 0;
         border-right: 0;
         margin-left: 10px;

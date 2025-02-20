@@ -3,6 +3,7 @@ import './sass/lay.scss';
 import RestA from './rest/test';
 import CircleP from './gpt/circle';
 import { IoMdArrowRoundBack } from "react-icons/io";
+import '../hyomin/setting/base.scss'
 import Header from '../hyomin/header/header';
 import AlertArea from '../hyomin/alert/alert';
 import Forecast from '../hyomin/forecast/forcast';
