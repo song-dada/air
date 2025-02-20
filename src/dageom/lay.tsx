@@ -3,7 +3,9 @@ import './sass/lay.scss';
 import RestA from './rest/test';
 import CircleP from './gpt/circle';
 import { IoMdArrowRoundBack } from "react-icons/io";
-import Header from '../hyomin/header/header'
+import Header from '../hyomin/header/header';
+import AlertArea from '../hyomin/alert/alert';
+import Forecast from '../hyomin/forecast/forcast';
 
 
 type ClickProps = {
@@ -119,17 +121,19 @@ function View( {onMode}:any ) {
             <>
                 <div className={`view ${onMode}`}>
 
-                    <div className="alertArea">
+                    {/* <div className="alertArea">
                         <div className="alert">미세먼지 경보</div>
                         <div className="alert">초미세먼지 경보</div>
                         <div className="alert doit">행동 요령</div>
                         
-                    </div>
-                    <div className="radarArea">
+                    </div> */}
+                    <AlertArea></AlertArea>
+                    {/* <div className="radarArea">
                         <div className="graphBar">범례</div>
                         <div className="nowMap">현재 대기질</div>
                         <div className="prevMap">예상 대기질</div>
-                    </div>
+                    </div> */}
+                    <Forecast></Forecast>
                 </div>
             
             </>
