@@ -1,4 +1,4 @@
-@import '../setting/color.scss';
+@import '../../../setting/color.scss';
 
 .upArea {
     width: 100%;
@@ -90,7 +90,7 @@
             right: 0;
             position: absolute;
     
-            background-image: url('../assets/manimg.png');
+            background-image: url('../../../assets/manimg.png');
             background-size: cover;
         }
     }

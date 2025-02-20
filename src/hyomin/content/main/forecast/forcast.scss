@@ -1,3 +1,5 @@
+@import '../../../setting/color.scss';
+
 .forecastArea {
     width: 100%;
     height: 510px;
@@ -7,7 +9,7 @@
 }
 
 .graphBar {
-    width: 22px;
+    width: 15px;
     height: 100%;
 
     background: linear-gradient(
@@ -29,7 +31,7 @@
 .nowMap {
     flex: 1.2;
 
-    background-color: aqua;
+    background-color: $color-forecastBG;
 }
 
 .prevAir {
@@ -51,7 +53,7 @@
         flex: 1;
         gap: 15px;
 
-        background-color: aqua;
+        background-color: $color-forecastBG;
 
         .forecastTitleArea {flex: 1;}
         .statusDisplay {flex: 3;;}

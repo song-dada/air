@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css'
-import Da from './dageom/lay'
+import Da from './lay'
 
 const App = () => {
   return (
