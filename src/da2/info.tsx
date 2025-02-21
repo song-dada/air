@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 // import './sass/lay.scss';
-import CircleP from '../dageom/gpt/circle';
+import CircleP from './circle';
 import { IoMdArrowRoundBack } from "react-icons/io";
 import LegendRow from './legendRow';
 
