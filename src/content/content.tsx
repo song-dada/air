@@ -21,7 +21,7 @@ function Content() {
 
     // 자료 가져옴
     useEffect(() => {
-        let url = "http://localhost:4000/sample";
+        let url = "/today";
         
         fetch(url)
           .then((response) => {
