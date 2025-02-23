@@ -8,6 +8,7 @@ import './hyomin/setting/base.scss'
 import Header from './hyomin/header/header';
 import AlertArea from './hyomin/content/main/alert/alert';
 import Forecast from './hyomin/content/main/forecast/forcast';
+import Footer from './hyomin/footer/footer';
 
 
 
@@ -161,13 +162,13 @@ function Click( {chaState, getRef}: ClickProps ) {
 //         </header>
 //     )
 // }
-function Footer() {
-    return(
-        <footer>
-            (C) 2025-03 CleanSky
-        </footer>
-    )
-}
+// function Footer() {
+//     return(
+//         <footer>
+//             (C) 2025-03 CleanSky
+//         </footer>
+//     )
+// }
 
 function Main() {
     const [mode, setMode] = useState(true);

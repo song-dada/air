@@ -30,10 +30,10 @@
 
             }
             .view{
-                width: calc(800px - 40px);
-                height: calc(800px - 40px);
+                width: calc(800px - 20px);
+                height: 800px;
                 background-color: blue;
-                padding: 20px;
+                padding-left: 20px;
                 overflow: hidden;
                 .alertArea{
                     // .alert{

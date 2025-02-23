@@ -6,7 +6,7 @@ function Header({ onSelect }: any) {
     return(
         <header>
             {/* 로고, 메뉴, 셀렉트 박스, 되나? */}
-            <a href='/' className='logo'>logo</a>
+            <a href='/' className='logo'>CleanSky</a>
             <nav>
                 <ul>
                     <li><a href="/">수도권조회</a></li>

@@ -4,11 +4,13 @@
 
 * {margin: 0; padding: 0;}
 
-html {
+html, body, header, footer {
     color: $color-font;
 
     font-family: "42dot Sans", serif;
     font-optical-sizing: auto;
     font-weight: weight;
-    font-style: normal;
+    font-style: 1rem;
+
+    text-decoration: none;
 }
