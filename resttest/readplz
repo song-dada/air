@@ -1,8 +1,0 @@
-파일 있는곳에서 빌드
-    docker build -t json-server-image .
-
-도커로 run
-    docker run -it --name jsondb -p 4000:4000 json-server-image  sh
-    화면 열리면 npm start
-
-    이미지 이름은 맘대로 바꿔도 되니 알아서할 것
