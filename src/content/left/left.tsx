@@ -19,8 +19,8 @@ function Left( props: any ) {
                 <Info getInfo={props.getData} getRow={props.getOneRow} />
                 {/* <LegendRow/> */}
                 {/* <Etc/> */}
-            </div>
             <LegendRow/>
+            </div>
             <div className="inc">
                 <Etc getRow={props.getOneRow} getPrevRow={ props.getPrevRow }/>
                 <Tips></Tips>

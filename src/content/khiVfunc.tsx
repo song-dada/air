@@ -8,7 +8,7 @@ interface getData{
 }
 export const khiVFunc= ( key: string, values: number)=>{
     let areaval: number[]=[];
-    const khaival: number[]=[0, 50, 51, 100, 101, 150, 151, 200];
+    const khaival: number[]=[0, 50, 51, 100, 101, 250, 251, 500];
     let iP: number = 0, 
     cP: number = values,
     cLow: number = 0,
@@ -36,7 +36,7 @@ export const khiVFunc= ( key: string, values: number)=>{
       returnData.name = "미세먼지"; 
       returnData.unit="㎍/㎥" } // clow/chigh 설정
     else if(key.includes('pm25')){ 
-      areaval=[0, 15, 16, 35, 36, 75, 76, 200];
+      areaval=[0, 15, 16, 35, 36, 75, 76, 150];
        returnData.name = "초미세먼지"; 
        returnData.unit="㎍/㎥"} 
     else if(key.includes('o3')){ 
@@ -44,15 +44,15 @@ export const khiVFunc= ( key: string, values: number)=>{
       returnData.name = "오존"; 
       returnData.unit="ppm" } 
     else if(key.includes('no2')){ 
-      areaval=[0, 0.03, 0.031, 0.06, 0.061, 0.2, 0.201, 0.6]; 
+      areaval=[0, 0.03, 0.031, 0.06, 0.061, 0.15, 0.151, 0.2]; 
       returnData.name = "이산화질소"; 
       returnData.unit="ppm" } 
     else if(key.includes('so2')){ 
-      areaval=[0, 0.2, 0.21, 0.5, 0.051, 0.15, 0.151, 0.6]; 
+      areaval=[0, 0.02, 0.021, 0.05, 0.051, 0.15, 0.151, 0.2]; 
       returnData.name = "아황산가스"; 
       returnData.unit="ppm" } 
     else if(key.includes('co')){ 
-      areaval=[0, 2, 2.1, 9, 9.1, 15, 15.1, 30]; 
+      areaval=[0, 2, 2.01, 9, 9.01, 15, 15.01, 20]; 
       returnData.name = "일산화탄소"; 
       returnData.unit="ppm" } 
     else{ return null; }

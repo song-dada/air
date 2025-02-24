@@ -103,8 +103,8 @@ const PieChart = (props: any) => {
                 .attr("x", 0)
                 .attr("y", "0.7em")
                 .attr("fill-opacity", 0.7)
-                .text(d => d.data.original));
-                // .text(d => d.data.value));
+                // .text(d => d.data.original));
+                .text(d => d.data.value));
 
         // 범례
         const legendData = data.map(d => ({ name: d.name, color: color(d.name) }));

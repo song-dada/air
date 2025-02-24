@@ -6,7 +6,7 @@ import Center from './center/center';
 import Right from './right/right';
 // import { IoMdArrowRoundBack } from "react-icons/io";
 // dageom
-
+// http://kkms4001.iptime.org:21168/week?stationName=%EC%A4%91%EA%B5%AC
 import './content.scss'
 
 function Content() {
@@ -48,7 +48,7 @@ function Content() {
 
         // 전월 데이터
         // url = "http://localhost:4000/sampleMonth";
-        // url = "/month?date=2024-01";
+        // url = "/month?date=2025-01";
         url = "/day?day=2025-02-23";
         // http://kkms4001.iptime.org:21168/month?date=2024-02
         fetch(url)
@@ -60,7 +60,7 @@ function Content() {
           })
           .then((data) => {
             //   console.log(data)
-            console.log("지난달 연결완료")
+            console.log("어제 연결완료")
             console.log(data)
 
             setPrevMonthDatas(data);
@@ -246,7 +246,7 @@ function Content() {
             <Right getOneRow={ oneRow }/>
 
         </div>
-            {/* {d} */}
+            {d}
 
         </>
     )
