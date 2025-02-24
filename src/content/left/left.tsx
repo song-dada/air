@@ -8,12 +8,13 @@ import Etc from './etc/etc'
 
 
 function Left( props: any ) {
+    // console.log( props.getPrevRow );
     return(
         <>
         <div className="leftArea"  style={{flex: 1}}>
             <Info getInfo={props.getData} getRow={props.getOneRow} />
             <LegendRow/>
-            <Etc/>
+            <Etc getRow={props.getOneRow} getPrevRow={ props.getPrevRow }/>
         </div>
         </>
     )

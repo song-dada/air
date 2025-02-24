@@ -12,17 +12,20 @@ function Content() {
     const [datas, setData] = useState<any[]>([]);
 
     const [allDatas, setAllData] = useState<any[]>([]);
+    const [prevMonthDatas, setPrevMonthDatas] = useState<any[]>([]);
     const [sido, setSido] = useState('');
     const [station, setStation] = useState('');
 
     const [sidoList, setSidoList] =  useState<any[]>([]);
     const [stationList, setStationList] = useState<any[]>([])
     const [oneRow, setOneRow] = useState<any>([])
+    const [prevOneRow, setPrevOneRow] = useState<any>([])
 
     // 자료 가져옴
     useEffect(() => {
-        let url = "http://localhost:4000/sample";
-        // let url = "/today";
+        // let url = "http://localhost:4000/sample";
+        let url = "/day?day=2025-02-21";
+        // http://kkms4001.iptime.org:21168/day?day=2025-02-21
         
         fetch(url)
           .then((response) => {
@@ -37,6 +40,25 @@ function Content() {
           .catch((error) => {
             console.log(error)
         });
+
+        // 전월 데이터
+        // url = "http://localhost:4000/sampleMonth";
+        url = "/month?date=2024-02";
+        // http://kkms4001.iptime.org:21168/month?date=2024-02
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            //   console.log(data)
+            setPrevMonthDatas(data);
+          })
+          .catch((error) => {
+            console.log(error)
+        });
     }, []);
 
     // 시도 리스트 설정
@@ -47,10 +69,16 @@ function Content() {
             const list = dataList.map((item) => ({
                 key: item.sidoName,  // sidoName을 key로 사용
                 value: item.sidoName, // sidoName을 그대로 value로 저장
-              }));
-              console.log(list);
+            }));
+            
+            // 처음 랜더시 나오는 데이터
+            if (dataList.length > 0) {
+                // let ddho = dataList[0]["sidoName"]
+                // console.log( ddho );
+                setSido(dataList[0]["sidoName"])
+                
+            }
             setSidoList(()=> list );
-            // setSido(  );
             setStationList(()=> [] );
     }, [allDatas]);
     
@@ -72,18 +100,31 @@ function Content() {
 
 
         qurey = 'SELECT * FROM ?'; // 기본
-        // qurey = 'SELECT Avg(pm10Value), Avg(pm25Value), Avg(o3Value), Avg(no2Value), Avg(so2Value), Avg(coValue), Avg(khaiValue) FROM ? '; // 기본
         if(sido !== ''){
             qurey+=`WHERE sidoName="${sido}" LIMIT 1`;
         }
         dataList = alasql(qurey,[allDatas]);
 
-        console.log( "dataList" );
-        console.log( dataList );
+        // console.log( "dataList" );
 
-        const oneRow = dataList[0];
-        console.log( oneRow );
-        setOneRow( oneRow );
+        // const oneRow = dataList[0];
+        // console.log( oneRow );
+        setOneRow( dataList[0]);
+
+
+        // console.log( prevMonthDatas );
+
+        if(dataList.length > 0){
+            let prevStation = dataList[0]["stationName"];
+            qurey = 'SELECT * FROM ?'; // 기본
+            qurey+=`WHERE stationName="${prevStation}"`;
+    
+            let prevData: any[] = []
+            prevData = alasql(qurey, [prevMonthDatas])
+            setPrevOneRow( prevData[0] );
+
+        }
+
 
     }, [sido]);
 
@@ -99,13 +140,29 @@ function Content() {
         dataList = alasql(qurey, [allDatas]) ;
         // console.log( "이 아래 나오는게 쿼리 결과" );
         // console.log( dataList[0] );
-
         setOneRow( dataList[0] );
-        const oneRow = dataList[0]; 
-        console.log( oneRow );
+        if(dataList.length > 0){
+            let addrss = dataList[0].addr;
+            qurey = 'SELECT * FROM ? '; // 기본
+            qurey+=`WHERE addr="${addrss}"`;
+
+            let prevData: any[] = []
+            prevData = alasql(qurey, [prevMonthDatas])
+            setPrevOneRow( prevData[0] );
+        }
+        // const oneRow = dataList[0]; 
+        // console.log( oneRow );
+        // qurey = 'SELECT * FROM ? '; // 기본
+        // // if(sido !== ''){
+        //     qurey+=`WHERE stationName="${station}"`;
+        // let prevData: any[] = []
+        // prevData = alasql(qurey, [prevMonthDatas])
+        // setPrevOneRow( prevData[0] );
+        // console.log( "이 아래 나오는게 쿼리 결과" );
+        // console.log( prevData );
 
     }, [station]);
-
+    // (올해의 값 - 작년의 값) / 작년의 값 *100
     const d = 
     <>
         <select name="sido" id="sido" onChange={(e) => setSido(e.currentTarget.value)}>
@@ -127,15 +184,10 @@ function Content() {
     const giveStation=( itme: any)=>{
         setStation(itme);
     }
-    const resultRow=( itme: any)=>{
-        // setStation(itme);
-        console.log("지수 계산 결과");
-        console.log(itme);
-    }
     return(
         <>
         <div className="didid" style={{display: 'flex'}}>
-            <Left getData={ allDatas } getOneRow={ oneRow }/>
+            <Left getData={ allDatas } getOneRow={ oneRow } getPrevRow={ prevOneRow }/>
             <Center findSido={sidoList}
             // onSetSido={( reSido: string )=>{
             //     console.log("부모에서 받아옴 ");

@@ -8,10 +8,10 @@ function Center({findSido, onSetSido, onSetStation}: any) {
         //     console.log("시도인경우");
         //     onSetSido( item );
         // }else{
-            console.log("측정소인경우");
+            // console.log("측정소인경우");
             onSetStation( item );
         // }
-        console.log(item);
+        // console.log(item);
     }
     return(
         <>
