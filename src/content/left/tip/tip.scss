@@ -1,0 +1,50 @@
+@import '../../../setting/color.scss';
+
+.tipBox {
+    width: 260px;
+    height: 100%;
+
+    .tipMessage {
+        width: calc(100% - 40px);
+        height: calc(48% - 40px);
+        padding: 20px;
+        margin-bottom: 32px;
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: start;
+
+        background-color: $color-alertBG;
+        border-radius: 15px;
+    }
+    .tipMessage::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 70%;
+        width: 0;
+        height: 0;
+        border: 20px solid transparent;
+        border-top-color: $color-alertBG;
+        border-bottom: 0;
+        border-right: 0;
+        margin-left: 10px;
+        margin-bottom: -20px;
+    }
+    .imgbox {
+        width: 100%;
+        position: relative;
+
+        .imgicon {
+            width: 85px;
+            height: 90px;
+            right: 0;
+            bottom: -95px;
+            position: absolute;
+    
+            background-image: url('../../../setting/img/manimg.png');
+            background-size: cover;
+        }
+    }
+}
