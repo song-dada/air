@@ -24,7 +24,7 @@ function Content() {
     // 자료 가져옴
     useEffect(() => {
         // let url = "http://localhost:4000/sample";
-        let url = "/day?day=2025-02-21";
+        let url = "/today";
         // http://kkms4001.iptime.org:21168/day?day=2025-02-21
         
         fetch(url)
@@ -35,6 +35,9 @@ function Content() {
             return response.json();
           })
           .then((data) => {
+            console.log("오늘 데이터 연결완료")
+            console.log(data)
+
             setAllData(data);
           })
           .catch((error) => {
@@ -43,7 +46,7 @@ function Content() {
 
         // 전월 데이터
         // url = "http://localhost:4000/sampleMonth";
-        url = "/month?date=2024-02";
+        url = "/month?date=2024-01";
         // http://kkms4001.iptime.org:21168/month?date=2024-02
         fetch(url)
           .then((response) => {
@@ -54,6 +57,9 @@ function Content() {
           })
           .then((data) => {
             //   console.log(data)
+            console.log("지난달 연결완료")
+            console.log(data)
+
             setPrevMonthDatas(data);
           })
           .catch((error) => {
@@ -65,21 +71,21 @@ function Content() {
     useEffect(() => {
         let dataList: any[] = [];
             let qurey = 'SELECT DISTINCT sidoName FROM ?';
+            // console.log(allDatas)
+            
             dataList = alasql(qurey,[allDatas]) ;
             const list = dataList.map((item) => ({
                 key: item.sidoName,  // sidoName을 key로 사용
                 value: item.sidoName, // sidoName을 그대로 value로 저장
             }));
             
+            
             // 처음 랜더시 나오는 데이터
-            if (dataList.length > 0) {
-                // let ddho = dataList[0]["sidoName"]
-                // console.log( ddho );
+            if (dataList.length > 0) { 
                 setSido(dataList[0]["sidoName"])
-                
             }
-            setSidoList(()=> list );
-            setStationList(()=> [] );
+                setSidoList(()=> list );
+                setStationList(()=> [] );
     }, [allDatas]);
     
     // 측정소 리스트 설정
@@ -97,8 +103,11 @@ function Content() {
         }));
 
         setStationList( list );
-
-
+        // console.log(list)
+        if(list.length>0){
+            setStation(list[0].value);
+        }
+        
         qurey = 'SELECT * FROM ?'; // 기본
         if(sido !== ''){
             qurey+=`WHERE sidoName="${sido}" LIMIT 1`;
@@ -106,24 +115,32 @@ function Content() {
         dataList = alasql(qurey,[allDatas]);
 
         // console.log( "dataList" );
+        if(dataList.length>0){
+            const oneRow = dataList[0];
+            console.log( oneRow );
+            console.log( oneRow.stationName );
+            setStation(oneRow.stationName);
+        }
+        setOneRow( dataList[0] );
 
-        // const oneRow = dataList[0];
-        // console.log( oneRow );
-        setOneRow( dataList[0]);
+        // setStation( dataList[0]["stationName"]);
 
 
         // console.log( prevMonthDatas );
 
-        if(dataList.length > 0){
-            let prevStation = dataList[0]["stationName"];
-            qurey = 'SELECT * FROM ?'; // 기본
-            qurey+=`WHERE stationName="${prevStation}"`;
+        // if(dataList.length > 0){
+        //     let prevStation = dataList[0]["stationName"];
+        //     qurey = 'SELECT * FROM ?'; // 기본
+        //     qurey+=`WHERE stationName="${prevStation}"`;
     
-            let prevData: any[] = []
-            prevData = alasql(qurey, [prevMonthDatas])
-            setPrevOneRow( prevData[0] );
-
-        }
+        //     let prevData: any[] = []
+        //     prevData = alasql(qurey, [prevMonthDatas])
+        //     if (prevData.length>0) {
+        //         console.log("*----0 prevData[0]" );
+        //         console.log( prevData[0] );
+        //         setPrevOneRow( prevData[0] );
+        //     }
+        // }
 
 
     }, [sido]);
@@ -131,24 +148,35 @@ function Content() {
     // 한행 설정 세부2로 넘길수 있으려나
     useEffect(() => {
         console.log( station );
-
         let dataList: any[] = [];
         let qurey = 'SELECT * FROM ? '; // 기본
         // if(sido !== ''){
             qurey+=`WHERE stationName="${station}"`;
         // }
         dataList = alasql(qurey, [allDatas]) ;
-        // console.log( "이 아래 나오는게 쿼리 결과" );
-        // console.log( dataList[0] );
+        console.log( "이 아래 나오는게 쿼리 결과" );
+        console.log( dataList[0] );
         setOneRow( dataList[0] );
+
         if(dataList.length > 0){
+            console.log( "dataList[0]는 ㅇ0아너미ㅏㄹ멍나ㅣㅓㅁ리ㅏㄴ어리ㅓ" );
             let addrss = dataList[0].addr;
             qurey = 'SELECT * FROM ? '; // 기본
             qurey+=`WHERE addr="${addrss}"`;
 
             let prevData: any[] = []
             prevData = alasql(qurey, [prevMonthDatas])
-            setPrevOneRow( prevData[0] );
+            console.log( "prevDatadsfkakdlkfwakjflskjdslfjadslkjfkj" );
+            console.log( prevData );
+
+            if(prevData.length > 0){
+                console.log("*----0 prevData[0]" );
+    
+                console.log( prevData[0] );
+    
+                setPrevOneRow( prevData[0] );
+
+            }
         }
         // const oneRow = dataList[0]; 
         // console.log( oneRow );

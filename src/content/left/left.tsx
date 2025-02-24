@@ -8,7 +8,8 @@ import Etc from './etc/etc'
 
 
 function Left( props: any ) {
-    // console.log( props.getPrevRow );
+    console.log( props.getOneRow );
+    console.log( props.getPrevRow );
     return(
         <>
         <div className="leftArea"  style={{flex: 1}}>
