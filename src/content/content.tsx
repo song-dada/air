@@ -7,6 +7,8 @@ import Right from './right/right';
 // import { IoMdArrowRoundBack } from "react-icons/io";
 // dageom
 
+import './content.scss'
+
 function Content() {
     const [showList, setShowList] = useState<any[]>([]);
     const [datas, setData] = useState<any[]>([]);
@@ -244,7 +246,7 @@ function Content() {
             <Right getOneRow={ oneRow }/>
 
         </div>
-            {d}
+            {/* {d} */}
 
         </>
     )
