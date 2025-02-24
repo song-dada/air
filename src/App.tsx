@@ -1,15 +1,20 @@
 import React from 'react';
-import './App.css'
-import Da from './lay'
-import Dp from './hyomin/1/display'
+import Header from './header/header';
+import Content from './content/content';
+import Footer from './footer/footer';
+import './app.scss';
 
 const App = () => {
   return (
-    <div className="App">
-      {/* APP화면 */}
-      <Da></Da>
-      <Dp></Dp>
-    </div>
+    <>
+      <body>
+      <Header></Header>
+        <div className='body'>
+          <Content/>
+        </div>
+      <Footer/>
+      </body>
+    </>
   );
 }
 
