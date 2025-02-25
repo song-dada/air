@@ -48,8 +48,8 @@ function AlertArea() {
         <div className="alertArea">
             <Alert title={"미세먼지"}/>
             <Alert title={"초미세먼지"}/> 
+            <Alert title={"이온"}/> 
         </div>
-        <Tips />
     </div>
 }
 

@@ -2,15 +2,18 @@ import React from 'react';
 import Header from './header/header';
 import Content from './content/content';
 import Footer from './footer/footer';
+import './app.scss';
 
 const App = () => {
   return (
     <>
-      <Header></Header>
       <body>
-        <Content/>
-      </body>
+      <Header></Header>
+        <div className='body'>
+          <Content/>
+        </div>
       <Footer/>
+      </body>
     </>
   );
 }

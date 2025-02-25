@@ -1,8 +1,8 @@
 function Footer() {
     return(
-        <>
+        <div className="footer">
         footerArea
-        </>
+        </div>
     );
 }
 

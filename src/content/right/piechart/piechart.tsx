@@ -153,11 +153,16 @@ const PieChart = (props: any) => {
         <>
         {/* {conut}
         <button type="button" onClick={ ()=>{ setConut(prev => prev+1)} }>click</button> */}
-            <div style={{ width: "500px", height: "300px", minHeight: "300px" }}>
+            <div className="piechart" style={{ width: "450px", height: "300px", minHeight: "300px" }}>
                 <svg ref={svgRef} width="100%" height="100%" />
             </div>
         </>
     );
   };
 
-export default PieChart;
+  export default PieChart;
+
+//   function RE() {
+//     return <>12345</>
+//   }
+// export default RE;

@@ -36,13 +36,13 @@ const Create = ({ onKey, onValue, getRow, onPush}:any) => {
 
     return (
       <div className="half-circle-progress infoItem">
-        <svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
           <path
           // <!-- 배경 반원 -->
             d="M 10,50 A 40,40 0 0 1 90,50"
             fill="none"
             stroke="#e0e0e0"
-            strokeWidth="8"
+            strokeWidth="15"
             strokeLinecap="round"
           />
           <path
@@ -50,7 +50,7 @@ const Create = ({ onKey, onValue, getRow, onPush}:any) => {
             d="M 10,50 A 40,40 0 0 1 90,50"
             fill="none"
             stroke={ color }
-            strokeWidth="8"
+            strokeWidth="15"
             strokeLinecap="round" // <!-- 끝부분 둥글게 -->
             strokeDasharray="125.6"
             // strokeDashoffset={`${125.6 - (onValue / 200) * 125.6}`}
@@ -58,12 +58,14 @@ const Create = ({ onKey, onValue, getRow, onPush}:any) => {
           />
         </svg>
         <div className="progress-text">
-        {getRow.sidoName},
-        {getRow.stationName}
-        {state} :
-          {getData.name} : 
-          {getData.value} :
-          {getData.original} :
+          {/* <div className="circleName">
+            {getRow.sidoName}
+            {getRow.stationName}
+          </div> */}
+          <div className="circlenN">{getData.name}</div>
+          <div className="circlestate">{state}</div>
+          {/* <div className="circlevalue">{getData.value}</div> */}
+          <div className="circleoriginV">{getData.original}</div>
           <figure>{getData.unit}</figure>
         </div>
       </div>

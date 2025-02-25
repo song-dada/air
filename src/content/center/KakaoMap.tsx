@@ -242,8 +242,8 @@ const addLegend = (map: any) => {
   
   return (
     <div>
-      <h2>대기 오염 측정소 현황</h2>
-      <div id="map" style={{ width: "740px", height: "700px"}}></div>
+      {/* <h2>대기 오염 측정소 현황</h2> */}
+      <div id="map" style={{ width: "530px", height: "695px"}}></div>
     </div>
   );
 };

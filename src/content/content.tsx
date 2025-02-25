@@ -7,6 +7,8 @@ import Right from './right/right';
 // import { IoMdArrowRoundBack } from "react-icons/io";
 // dageom
 
+import './content.scss'
+
 function Content() {
     const [showList, setShowList] = useState<any[]>([]);
     const [datas, setData] = useState<any[]>([]);
@@ -46,7 +48,8 @@ function Content() {
 
         // 전월 데이터
         // url = "http://localhost:4000/sampleMonth";
-        url = "/month?date=2024-01";
+        // url = "/month?date=2024-01";
+        url = "/day?day=2025-02-23";
         // http://kkms4001.iptime.org:21168/month?date=2024-02
         fetch(url)
           .then((response) => {
@@ -93,7 +96,7 @@ function Content() {
         let dataList: any[] = [];
         let qurey = 'SELECT * FROM ? '; // 기본
         if(sido !== ''){
-            qurey+=`WHERE sidoName="${sido}"`;
+            qurey+=`WHERE sidoName="${sido}" ORDER BY stationName`;
         }
         dataList = alasql(qurey,[allDatas]) ;
 
@@ -104,17 +107,19 @@ function Content() {
 
         setStationList( list );
         // console.log(list)
-        if(list.length>0){
-            setStation(list[0].value);
-        }
-        
-        qurey = 'SELECT * FROM ?'; // 기본
-        if(sido !== ''){
-            qurey+=`WHERE sidoName="${sido}" LIMIT 1`;
-        }
-        dataList = alasql(qurey,[allDatas]);
+        // if(dataList.length>0){
+        //     setStation(dataList[0].value);
+        // }
 
-        // console.log( "dataList" );
+        // 한 행 설정
+        // qurey = 'SELECT * FROM ?'; // 기본
+        // if(sido !== ''){
+        //     qurey+=`WHERE sidoName="${sido}"  LIMIT 1`;
+        // }
+        // dataList = alasql(qurey,[allDatas]);
+
+        console.log( "dataList" );
+
         if(dataList.length>0){
             const oneRow = dataList[0];
             console.log( oneRow );
@@ -128,19 +133,26 @@ function Content() {
 
         // console.log( prevMonthDatas );
 
-        // if(dataList.length > 0){
-        //     let prevStation = dataList[0]["stationName"];
-        //     qurey = 'SELECT * FROM ?'; // 기본
-        //     qurey+=`WHERE stationName="${prevStation}"`;
+        if(dataList.length > 0){
+            // let prevStation = dataList[0]["stationName"];
+            
+            // qurey = 'SELECT * FROM ?'; // 기본
+            // qurey+=`WHERE stationName="${prevStation}"`;
+
+            let addrss = dataList[0].addr;
+            console.log("측정소 위치정보")
+            console.log(addrss)
+            qurey = 'SELECT * FROM ? '; // 기본
+            qurey+=`WHERE addr="${addrss}"`;
     
-        //     let prevData: any[] = []
-        //     prevData = alasql(qurey, [prevMonthDatas])
-        //     if (prevData.length>0) {
-        //         console.log("*----0 prevData[0]" );
-        //         console.log( prevData[0] );
-        //         setPrevOneRow( prevData[0] );
-        //     }
-        // }
+            let prevData: any[] = []
+            prevData = alasql(qurey, [prevMonthDatas])
+            if (prevData.length>0) {
+                console.log("*----0 prevData[0]" );
+                console.log( prevData[0] );
+                setPrevOneRow( prevData[0] );
+            }
+        }
 
 
     }, [sido]);
@@ -159,8 +171,10 @@ function Content() {
         setOneRow( dataList[0] );
 
         if(dataList.length > 0){
-            console.log( "dataList[0]는 ㅇ0아너미ㅏㄹ멍나ㅣㅓㅁ리ㅏㄴ어리ㅓ" );
+            // console.log( "dataList[0]는 ㅇ0아너미ㅏㄹ멍나ㅣㅓㅁ리ㅏㄴ어리ㅓ" );
             let addrss = dataList[0].addr;
+            console.log("측정소 위치정보")
+            console.log(addrss)
             qurey = 'SELECT * FROM ? '; // 기본
             qurey+=`WHERE addr="${addrss}"`;
 
@@ -171,9 +185,8 @@ function Content() {
 
             if(prevData.length > 0){
                 console.log("*----0 prevData[0]" );
-    
                 console.log( prevData[0] );
-    
+
                 setPrevOneRow( prevData[0] );
 
             }
@@ -190,7 +203,6 @@ function Content() {
         // console.log( prevData );
 
     }, [station]);
-    // (올해의 값 - 작년의 값) / 작년의 값 *100
     const d = 
     <>
         <select name="sido" id="sido" onChange={(e) => setSido(e.currentTarget.value)}>
@@ -223,6 +235,7 @@ function Content() {
             //     setSido( prev => reSido);
 
             // }} 
+            getOneRow={ oneRow }
             onSetStation={( reStstion: string )=>{
                 // console.log("부모에서 받아옴 ");
                 // console.log(reStstion);
@@ -233,7 +246,7 @@ function Content() {
             <Right getOneRow={ oneRow }/>
 
         </div>
-            {d}
+            {/* {d} */}
 
         </>
     )
