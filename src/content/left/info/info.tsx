@@ -33,7 +33,7 @@ function InfoItem({sjarla}:any):any {
 }
 // function Info( {onMode, onOneRow, nowSido, nowStation }:any ) {
 function Info( props: any ) {
-    console.log(props);
+    // console.log(props);
     // const [show, setShow] = useState<string>('100%');
     // const upNdown=()=>{
     //     let up = '0';

@@ -10,32 +10,49 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    align-items: center;
+    justify-content: center;
     .infoItem{
-        background-color: yellow;
+        // background-color: yellow;
+        border: 1px solid black;
+        border-radius: 15px;
         display: inline-block;
-        width: 171px;
-        height: 160px;
+        width: 100px;
+        height: 100px;
     }
     .firstRow{
+        display: flex;
+        gap: 15px;
         .infoItem{
-            width: 300px;
-            height: 300px;
-        }
 
+            width: 200px;
+            height: 200px;
+        }
+    }
+
+
+    .secondRow {
+        display: flex;
+        gap: 5px;
+
+        .half-circle-progress {
+            width: 105px;
+            height: 130px;
+        }
     }
     h3{
-        width: 700px;
+        width: 400px;
     }
     h3:last-of-type{
         margin-top: 10px;
+    }
 }
-}
-.legend{
-    margin-top: 20px;
-    width: 100%;
-    background-color: rgb(67, 54, 180);
-    height: 50px;
-}
+// .legend{
+//     margin-top: 20px;
+//     width: 100%;
+//     // background-color: rgb(67, 54, 180);
+//     height: 50px;
+// }
 // .detailInfo{
 //     background-color: tomato;
 //     position: absolute;
