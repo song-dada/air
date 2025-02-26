@@ -86,7 +86,9 @@ const Create = ({ onKey, onValue, getRow, onPush}:any) => {
           </defs>
           <polygon
             points="49,25 51,25 50,2"
-            stroke="black" strokeWidth="2" strokeLinecap="round"
+            stroke="none" 
+            fill="#333"
+            strokeWidth="2" strokeLinecap="round"
             transform={`rotate(${(getData.value / 200) * 180 - 90}, 50, 50)`}
             clip-path="url(#gaugeClip)" 
           />

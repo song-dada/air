@@ -1,18 +1,54 @@
 import React, {useState, useEffect, useRef} from 'react';
 import alasql from "alasql";
 import PieChart from './piechart/piechart';
+import BarChart from './barChart/barCahrt';
 import Alert from './alert/alert';
 
 import LineChart from './line/linechart';
 
-
+interface getList {
+    name?: string;
+    pm10Value?: number;
+    pm25Value?: number;
+}
 function Right( props: any ) {
+    const [tryQuery, setTryQuery] = useState<boolean>(true);
     const [pm10List, setPm10List] = useState<any>([]);
     const [pm25List, setPm25List] = useState<any>([]);
-    // console.log("props.onStation")
-    // console.log(props)
+    const [toDayList, setToDayList] = useState<any>([]);
+    console.log("rigthe file props check")
+    console.log(props)
+
+    const avgListCall = ( table: any) => {
+        const q  = `SELECT 
+        sidoName,
+        AVG(pm10Value) as pm10Value,
+        AVG(pm25Value) as pm25Value
+        FROM ?
+        GROUP BY sidoName`;
+        const result: any[] = alasql(q, [table])
+        // console.log("ㅡㅡㅡㅡㅡㅡresultㅡㅡㅡㅡㅡㅡ")
+        // console.log(result)
+        let list: any[] = [];
+        for (let i = 0; i < result.length; i++) {
+            let returnData: getList = { 
+                name: result[i]. sidoName,
+                pm10Value: Math.ceil(result[i].pm10Value),
+                pm25Value: Math.ceil(result[i].pm25Value)
+              };
+              list.push(returnData);
+        }
+        return list
+    }
 
     useEffect(()=>{
+        // console.log(tryQuery)
+        if (props.getData?.length > 0) {
+           const avgList = avgListCall(props.getData);
+           setToDayList(avgList);
+        }
+
+        // console.log(toDayList)
         const today = new Date();
         const threeDaysAgo = new Date();
         threeDaysAgo.setDate(today.getDate() - 3);
@@ -63,8 +99,9 @@ function Right( props: any ) {
         <div className="rightArea">
             <Alert onAdata={ props.getData } ></Alert>
             <div className="ratiograph">
-                <h3>대기질 비율</h3>
-                <PieChart onOneRow={ props.getOneRow }/>
+                <h3>시도별 평균 대기정보</h3>
+                {/* <PieChart onOneRow={ props.getOneRow }/> */}
+                <BarChart getTodayList={ toDayList }/>
             </div>
             <div className="linegraph">
                 <h3>예상 대기질</h3>

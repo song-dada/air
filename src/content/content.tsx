@@ -4,6 +4,8 @@ import alasql from "alasql";
 import Left from './left/left';
 import Center from './center/center';
 import Right from './right/right';
+import Popup from './popup/popup'
+// import Popup from './popup/popup';
 // dageom
 
 import './content.scss'
@@ -19,6 +21,7 @@ function Content() {
     // *
     const [predictionDatas, setPredictionDatas] = useState<any[]>([])
     
+    const [mode, setMode] = useState('show');
     const [sido, setSido] = useState('');
     const [station, setStation] = useState('');
 
@@ -99,6 +102,8 @@ function Content() {
             // console.log(allDatas)
             
             dataList = alasql(query,[allDatas]);
+            setSidoList(dataList);
+
             // 처음 랜더시 나오는 데이터
             if (dataList.length > 0) { 
                 setSido(dataList[0]["sidoName"])
@@ -212,19 +217,25 @@ function Content() {
     return(
         <>
         <div className="mainContentArea" style={{display: 'flex'}}>
-            <Left getData={ allDatas }
+            <Left
+            getData={ allDatas }
             getOneRow={ oneRow }
             getPrevWeekRow={ prevWeekRow }
             getPrevMonthRow={ prevMonthRow }
             getPrevWeekDatas={prevWeekDatas} />
             <Center getOneRow={ oneRow }
             onSetStation={( reStstion: string )=>{ giveStation( reStstion) } } />
-            <Right getOneRow={ oneRow }
+            <Right
             getData={ allDatas }
+            getOneRow={ oneRow }
+            onSidoList={sidoList}
             onStation={station}
             getPrediction={ predictionDatas }
             getPrevWeekDatas={prevWeekDatas}/>
 
+        </div>
+        <div className="popUpContentArea">
+            {/* <Popup getMode={mode}/> */}
         </div>
 
         </>

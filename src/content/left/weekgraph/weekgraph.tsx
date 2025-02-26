@@ -16,8 +16,8 @@ function Weekgraph( props: any ) {
     useEffect(() => {
       const prevWeekDatas = props.getPrevWeekDatas;
       const data: any[] = prevWeekDatas;
-      console.log(prevWeekDatas);
-      console.log("Weekgraph file props check")
+      // console.log(prevWeekDatas);
+      // console.log("Weekgraph file props check")
       // upd2/air2/src/content/left/weekgraph/weekgraph.tsxconsole.log(props)
       
       // 차트 크기 설정
@@ -75,6 +75,19 @@ function Weekgraph( props: any ) {
       svg.append('g')
         .attr('transform', `translate(${margin.left},${margin.top})`)
         .call(d3.axisLeft(y));
+
+      svg.selectAll(".pm10-label")
+      .data(data)
+      .enter()
+      .append("text")
+      .attr("class", "pm10-label")
+      .attr("x", d => x(d.date)!)  // ✅ X축 좌표 설정
+      .attr("y", d => y(d.pm10Value ?? d.value)! - 10)  // ✅ Y축 좌표 설정
+      .text(d => d.pm10Value ?? d.value)
+      .attr("font-size", "12px")
+      .attr("fill", "blue")
+      .attr("text-anchor", "middle")
+      .attr("transform", `translate(${margin.left},0)`);
 
 
     }, [props]);

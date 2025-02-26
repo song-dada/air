@@ -14,7 +14,7 @@ function Alert(props: any) {
     let fillColor='#ddd';
     if(props.onYellow?.length > 0){
         let count = props.onYellow.length - 1;
-        fillColor='#ff0';
+        fillColor='#FEE596';
         title='주의보';
         printText=props.onYellow[0]["stationName"];
         if(count > 0) {printText+=" 외"+count+"곳"}

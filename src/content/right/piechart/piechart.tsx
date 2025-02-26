@@ -124,6 +124,10 @@ const PieChart = (props: any) => {
                 .text(d => {
                     const persent =  d.data.value / sum * 100;
                     let reText = parseFloat(persent.toFixed(1));
+                    if(isNaN(reText)){
+                        return `측정소 오류로 인해 \n 값을 확인할수 없습니다.`
+                        // return "측정소 오류로 인해<br/> 값을 확인할수 없습니다."
+                    }
                     return reText+'%';
                     // return persent;
                 })
