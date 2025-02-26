@@ -6,35 +6,121 @@
 }
 
 .info{
-    margin-top: 20px;
+    // margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    // gap: 15px;
+    align-items: center;
+    justify-content: center;
     .infoItem{
-        background-color: yellow;
+        // background-color: yellow;
+        // border: 1px solid #ddd;
+        // border-radius: 15px;
         display: inline-block;
         width: 100px;
         height: 100px;
     }
     .firstRow{
+        display: flex;
+        gap: 25px;
         .infoItem{
-            width: 200px;
-            height: 200px;
+            width: 215px;
+            height: 225px;
+        }
+        .progress-text {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 5px;
+
+            // position: relative;
+        
+            .circlestate {
+                margin-top: calc(100% - 60%);
+                font-size: 22pt;
+                // position: absolute;
+                // top: 50%;   
+            }
+            .circleoriginV {
+                margin-top: 5px;
+                font-size: 13pt;
+            }
+
+            .circleminV {
+                position: absolute;
+                top: calc(68%);
+                left: calc(8%);
+                font-size: 10pt;
+
+            }
+            .circlemaxV {
+                position: absolute;
+                top: calc(68%);
+                left: calc(100% - 15%);
+                font-size: 10pt;
+            }
         }
     }
+
+
+    .secondRow {
+        display: flex;
+        gap: 10px;
+
+        .half-circle-progress {
+            width: 110px;
+            height: 130px;
+        }
+
+        .progress-text {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 5px;
+
+            font-size: 13pt;
+            // position: relative;
+        
+            .circlestate {
+                margin-top: calc(100% - 65%);
+                font-size: 15pt;
+                // position: absolute;
+                // top: 50%;   
+            }
+            .circleoriginV {
+                margin-top: 5px;
+                font-size: 10pt;
+            }
+            .circleminV {
+                position: absolute;
+                top: calc(55%);
+                left: calc(7%);
+                font-size: 8pt;
+            }
+            .circlemaxV {
+                position: absolute;
+                top: calc(55%);
+                left: calc(100% - 17%);
+                font-size: 8pt;
+            }
+        }
+    }
+    h3{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    h3:last-of-type{
+        margin-top: 20px;
+    }
 }
-h3{
-    width: 400px;
-}
-h3:last-of-type{
-    margin-top: 10px;
-}
-.legend{
-    margin-top: 20px;
-    width: 100%;
-    background-color: rgb(67, 54, 180);
-    height: 50px;
-}
+// .legend{
+//     margin-top: 20px;
+//     width: 100%;
+//     // background-color: rgb(67, 54, 180);
+//     height: 50px;
+// }
 // .detailInfo{
 //     background-color: tomato;
 //     position: absolute;

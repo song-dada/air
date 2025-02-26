@@ -4,8 +4,9 @@ import alasql from "alasql";
 import Left from './left/left';
 import Center from './center/center';
 import Right from './right/right';
-// import { IoMdArrowRoundBack } from "react-icons/io";
 // dageom
+
+import './content.scss'
 
 function Content() {
     const [showList, setShowList] = useState<any[]>([]);
@@ -13,20 +14,24 @@ function Content() {
 
     const [allDatas, setAllData] = useState<any[]>([]);
     const [prevMonthDatas, setPrevMonthDatas] = useState<any[]>([]);
+    const [prevWeekDatas, setPrevWeekDatas] = useState<any[]>([]);
+
+    // *
+    const [predictionDatas, setPredictionDatas] = useState<any[]>([])
+    
     const [sido, setSido] = useState('');
     const [station, setStation] = useState('');
 
     const [sidoList, setSidoList] =  useState<any[]>([]);
     const [stationList, setStationList] = useState<any[]>([])
     const [oneRow, setOneRow] = useState<any>([])
-    const [prevOneRow, setPrevOneRow] = useState<any>([])
+    const [prevWeekRow, setPrevWeekRow] = useState<any>([])
+    const [prevMonthRow, setPrevMonthRow] = useState<any>([])
 
     // 자료 가져옴
     useEffect(() => {
-        // let url = "http://localhost:4000/sample";
+        // 오늘 데이터 연결
         let url = "/today";
-        // http://kkms4001.iptime.org:21168/day?day=2025-02-21
-        
         fetch(url)
           .then((response) => {
             if (!response.ok) {
@@ -35,19 +40,23 @@ function Content() {
             return response.json();
           })
           .then((data) => {
-            console.log("오늘 데이터 연결완료")
-            console.log(data)
-
-            setAllData(data);
+            // console.log(data)
+            setAllData( data );
           })
           .catch((error) => {
             console.log(error)
         });
 
-        // 전월 데이터
-        // url = "http://localhost:4000/sampleMonth";
-        url = "/month?date=2024-01";
+        // 이전 데이터
+        const date = new Date();
+        const nowYear = date.getFullYear(); // 올해 설정
+        const prevMonth = date.getMonth(); // 전월 데이터
         // http://kkms4001.iptime.org:21168/month?date=2024-02
+        // http://kkms4001.iptime.org:21168/day?day=2025-02-21
+        // url = "/month?date=2025-01";
+        let ze='';
+        if(prevMonth<10){ ze = '0'}
+        url = `/month?month=${nowYear}-${ze}${prevMonth}`; // 올해 전 달
         fetch(url)
           .then((response) => {
             if (!response.ok) {
@@ -56,13 +65,29 @@ function Content() {
             return response.json();
           })
           .then((data) => {
-            //   console.log(data)
-            console.log("지난달 연결완료")
-            console.log(data)
-
-            setPrevMonthDatas(data);
+            // console.log(data)
+            setPrevMonthDatas( data );
           })
           .catch((error) => {
+            console.log(error)
+        });
+
+        // *
+        // 예측 데이터
+        url = "/prediction";
+
+        fetch(url)
+            .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+            })
+            .then((data) => {
+                // console.log(data)
+                setPredictionDatas( data );
+            })
+            .catch((error) => {
             console.log(error)
         });
     }, []);
@@ -70,170 +95,137 @@ function Content() {
     // 시도 리스트 설정
     useEffect(() => {
         let dataList: any[] = [];
-            let qurey = 'SELECT DISTINCT sidoName FROM ?';
+            let query = 'SELECT DISTINCT sidoName FROM ?';
             // console.log(allDatas)
             
-            dataList = alasql(qurey,[allDatas]) ;
-            const list = dataList.map((item) => ({
-                key: item.sidoName,  // sidoName을 key로 사용
-                value: item.sidoName, // sidoName을 그대로 value로 저장
-            }));
-            
-            
+            dataList = alasql(query,[allDatas]);
             // 처음 랜더시 나오는 데이터
             if (dataList.length > 0) { 
                 setSido(dataList[0]["sidoName"])
             }
-                setSidoList(()=> list );
-                setStationList(()=> [] );
     }, [allDatas]);
     
-    // 측정소 리스트 설정
+    // 측정소 리스트 설정 시도가 새로 설정 될시 실행됨
     useEffect(() => {
+        console.log( "시도" );
+        console.log( sido );
+
         let dataList: any[] = [];
-        let qurey = 'SELECT * FROM ? '; // 기본
+        let query = 'SELECT * FROM ? '; // 기본
         if(sido !== ''){
-            qurey+=`WHERE sidoName="${sido}"`;
+            query+=`WHERE sidoName="${sido}" `; // ORDER BY stationName`;
         }
-        dataList = alasql(qurey,[allDatas]) ;
-
-        const list = dataList.map((item) => ({
-            key: item.stationName,
-            value: item.stationName
-        }));
-
-        setStationList( list );
-        // console.log(list)
-        if(list.length>0){
-            setStation(list[0].value);
-        }
-        
-        qurey = 'SELECT * FROM ?'; // 기본
-        if(sido !== ''){
-            qurey+=`WHERE sidoName="${sido}" LIMIT 1`;
-        }
-        dataList = alasql(qurey,[allDatas]);
-
-        // console.log( "dataList" );
+        dataList = alasql(query,[allDatas]) ;
         if(dataList.length>0){
             const oneRow = dataList[0];
-            console.log( oneRow );
-            console.log( oneRow.stationName );
-            setStation(oneRow.stationName);
+
+            // console.log( "쿼리 생성 이후 넘기는 값인 한행 설정" );
+            // console.log( oneRow );
+            // console.log( oneRow["stationName"] );
+            setStation(oneRow.stationName );
+            setOneRow((prev: any) => oneRow );
         }
-        setOneRow( dataList[0] );
-
-        // setStation( dataList[0]["stationName"]);
-
-
-        // console.log( prevMonthDatas );
-
-        // if(dataList.length > 0){
-        //     let prevStation = dataList[0]["stationName"];
-        //     qurey = 'SELECT * FROM ?'; // 기본
-        //     qurey+=`WHERE stationName="${prevStation}"`;
-    
-        //     let prevData: any[] = []
-        //     prevData = alasql(qurey, [prevMonthDatas])
-        //     if (prevData.length>0) {
-        //         console.log("*----0 prevData[0]" );
-        //         console.log( prevData[0] );
-        //         setPrevOneRow( prevData[0] );
-        //     }
-        // }
-
-
     }, [sido]);
 
-    // 한행 설정 세부2로 넘길수 있으려나
+    // 스테이션 변경시 가져오는 값들
     useEffect(() => {
-        console.log( station );
+        // console.log( "스테이션 설정됨" );
+        // console.log( station );
+
         let dataList: any[] = [];
-        let qurey = 'SELECT * FROM ? '; // 기본
-        // if(sido !== ''){
-            qurey+=`WHERE stationName="${station}"`;
-        // }
-        dataList = alasql(qurey, [allDatas]) ;
-        console.log( "이 아래 나오는게 쿼리 결과" );
-        console.log( dataList[0] );
-        setOneRow( dataList[0] );
+        let query = "SELECT * FROM ? WHERE stationName = ?";
+        dataList = alasql(query, [allDatas, station]) ;
 
-        if(dataList.length > 0){
-            console.log( "dataList[0]는 ㅇ0아너미ㅏㄹ멍나ㅣㅓㅁ리ㅏㄴ어리ㅓ" );
-            let addrss = dataList[0].addr;
-            qurey = 'SELECT * FROM ? '; // 기본
-            qurey+=`WHERE addr="${addrss}"`;
+        if (dataList.length > 0 ) {
+            // console.log( " 스테이션 설정후 뜨는 로고 오늘의 데이터를 가져옴 " );
+            // console.log( "오늘의 데이터를 가져왔습니다." );
+            // console.log( dataList[0] );
+            // 해당 스테이션의 오늘 값 설정
+            setOneRow( dataList[0] );
 
-            let prevData: any[] = []
-            prevData = alasql(qurey, [prevMonthDatas])
-            console.log( "prevDatadsfkakdlkfwakjflskjdslfjadslkjfkj" );
-            console.log( prevData );
+            let url = "/week?stationName="+station;
+            fetch(url)
+                .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+                })
+                .then((data) => {
+                    console.log("이전 7(6+오늘)일 연결완료");
+                    let list = [... data, dataList[0]];
+                    // console.log(list)
+                    setPrevWeekDatas( list );
+                })
+                .catch((error) => {
+                console.log(error)
+            });
+            
+        }
+        if (prevMonthDatas.length > 0) {    
+            let prevData: any[] = alasql(query, [prevMonthDatas, station]);
 
-            if(prevData.length > 0){
-                console.log("*----0 prevData[0]" );
-    
+            if (prevData.length > 0) {
                 console.log( prevData[0] );
-    
-                setPrevOneRow( prevData[0] );
-
+                setPrevMonthRow( prevData[0] ); 
             }
         }
-        // const oneRow = dataList[0]; 
-        // console.log( oneRow );
-        // qurey = 'SELECT * FROM ? '; // 기본
-        // // if(sido !== ''){
-        //     qurey+=`WHERE stationName="${station}"`;
-        // let prevData: any[] = []
-        // prevData = alasql(qurey, [prevMonthDatas])
-        // setPrevOneRow( prevData[0] );
-        // console.log( "이 아래 나오는게 쿼리 결과" );
-        // console.log( prevData );
-
     }, [station]);
-    // (올해의 값 - 작년의 값) / 작년의 값 *100
-    const d = 
-    <>
-        <select name="sido" id="sido" onChange={(e) => setSido(e.currentTarget.value)}>
-            {sidoList.map((item) => (
-                <option key={item.key} value={item.value}>
-                    {item.value}
-                </option>
-            ))}
-        </select>
-        <select name="station" id="station" onChange={(e) => setStation(e.currentTarget.value)}>
-            {stationList.map((item) => (
-                <option key={item.key} value={item.value}>
-                    {item.value}
-                </option>
-            ))}
-        </select>
-    </>
+
+    // 해당 스테이션의 오늘 값 설정 완료 되면
+    useEffect(() => {
+        let prevData: any[] = [];
+        let query = "SELECT * FROM ? WHERE stationName = ?";
+        prevData = alasql(query, [prevMonthDatas, station])
+        if(prevData.length > 0){
+            // console.log( "지난 달 데이터를 가져왔습니다." );
+            // console.log(  prevData[0] )
+            setPrevMonthRow( prevData[0] ); // 해당 스테이션 지난달 평균
+        }
+    }, [oneRow]);
+    // 지난달 데이터를 가져오고
+    // 지난달 데이터가 설정되면 // 주 값 가져옴
+    useEffect(()=>{
+       
+        if(prevWeekDatas.length > 0){
+            // console.log( "지난주 데이터 테이블이 생성되었습니다." );
+            // console.log(prevWeekDatas);
+
+            let query = `SELECT 
+            AVG(coValue),
+            AVG(no2Value),
+            AVG(o3Value),
+            AVG(pm10Value),
+            AVG(pm25Value),
+            AVG(so2Value)
+            FROM ? WHERE stationName = ?`;
+            let prevWeekData: any[] = alasql(query, [prevWeekDatas, station]);
+            if(prevWeekData.length > 0){
+                setPrevWeekRow((prev: any) => prevWeekData[0] ); // 지난주 값 평균 데이터
+            }
+        }
+    },[prevWeekDatas]);
 
     const giveStation=( itme: any)=>{
         setStation(itme);
     }
     return(
         <>
-        <div className="didid" style={{display: 'flex'}}>
-            <Left getData={ allDatas } getOneRow={ oneRow } getPrevRow={ prevOneRow }/>
-            <Center findSido={sidoList}
-            // onSetSido={( reSido: string )=>{
-            //     console.log("부모에서 받아옴 ");
-            //     console.log(reSido);
-            //     setSido( prev => reSido);
-
-            // }} 
-            onSetStation={( reStstion: string )=>{
-                // console.log("부모에서 받아옴 ");
-                // console.log(reStstion);
-                //setStation( reStstion)}
-                giveStation( reStstion) } }
-            // onReturnRow={ (item:any) => resultRow(item) }
-            />
-            <Right getOneRow={ oneRow }/>
+        <div className="mainContentArea" style={{display: 'flex'}}>
+            <Left getData={ allDatas }
+            getOneRow={ oneRow }
+            getPrevWeekRow={ prevWeekRow }
+            getPrevMonthRow={ prevMonthRow }
+            getPrevWeekDatas={prevWeekDatas} />
+            <Center getOneRow={ oneRow }
+            onSetStation={( reStstion: string )=>{ giveStation( reStstion) } } />
+            <Right getOneRow={ oneRow }
+            getData={ allDatas }
+            onStation={station}
+            getPrediction={ predictionDatas }
+            getPrevWeekDatas={prevWeekDatas}/>
 
         </div>
-            {d}
 
         </>
     )

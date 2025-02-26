@@ -1,21 +1,12 @@
 import './header.scss'
 // hyomin
 
-function Header({ onSelect }: any) {
+function Header() {
     return(
         <header>
-            {/* 로고, 메뉴, 셀렉트 박스, 되나? */}
-            <a href='/' className='logo'>logo</a>
-            <nav>
-                <ul>
-                    <li><a href="/">수도권조회</a></li>
-                    <li><a href="/">통계데이터</a></li>
-                </ul>
-            </nav>
-            {onSelect}
-            {/* <SelectBox>
-
-            </SelectBox> */}
+            <a href='/' className='titleHeader'>
+                 <h1>Weather Air Quality</h1>
+            </a>
         </header>
     )
 }

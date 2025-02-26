@@ -1,4 +1,3 @@
-// import React, {useState, useEffect, useRef} from 'react';
 import './legend.scss'
 
 function LegendRow(){
@@ -22,9 +21,7 @@ function LegendRow(){
                     매우나쁨
                 </div>
             </div>
-
         </>
-
     )
 }
 

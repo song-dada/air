@@ -1,13 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
-import { khiVFunc  } from "../../khiVfunc";
+import { khaiVFunc  } from "../../khaiVfunc";
 import * as d3 from "d3";
+
+import './piechart.scss';
 
 import { PieArcDatum } from "d3-shape";
 interface DataItem {
-    name: string;
-    unit: string;
-    value: number;
-    original: number;
+    name: string
+    unit: string
+    enn: string
+    value: number
+    original: number
+    maxV: number
+    minV: number
+    arr: number[]
   }
 const PieChart = (props: any) => {
     const svgRef = useRef<SVGSVGElement | null>(null);
@@ -20,11 +26,15 @@ const PieChart = (props: any) => {
         let data: any[]=[];
         for (const key in props.onOneRow) {
         if(key.includes("Value")) { // 값인경우
-            data.push( khiVFunc( key, props.onOneRow[key] ) );
+            data.push( khaiVFunc( key, props.onOneRow[key] ) );
             }
         }
         data = data.filter(d => d !== null && d !== undefined);
         if (!data || data.length === 0) return;
+
+        let sum = 0;
+        data.forEach( i => sum+=i.value);
+        console.log(sum);
 
         
         // Specify the chart’s dimensions.
@@ -41,17 +51,18 @@ const PieChart = (props: any) => {
             .sort(null)
             .value(d => {
                 // console.log("d:", d.value); // 개별 데이터 확인
-                return d.value;
+                // return d.value;
+                const persent =  d.value / sum * 100;
+                    return persent;
             });
             
         const arc = d3.arc<PieArcDatum<DataItem>>()
             .innerRadius(0) // 도넛차트로 쓸거면 사용하면 됨(내부 원)
-            // .outerRadius(Math.min(width, height) / 2 - 1);
             .outerRadius(width / 4); // 원 크기
 
         // const labelRadius = Math.min(width, height) / 2 - 1 // 반지름
         const arcLabel = d3.arc<PieArcDatum<DataItem>>()
-            .innerRadius(Math.min(width, height) / 5) // 🔥 1/3보다 조금 더 크게 조정 // 이건 밖으로 밀어내는건가
+            .innerRadius(Math.min(width, height) / 5) // 1/3보다 조금 더 크게 조정 // 이건 밖으로 밀어내는건가
             .outerRadius(Math.min(width, height) / 3); // 원 밖으로 조금 밀어내기 // 숫자가 커질수록 안으로 들어옴
 
         const arcs = pie(data);
@@ -67,7 +78,7 @@ const PieChart = (props: any) => {
             .attr("transform", d => {
                 if (!d) return "translate(0,0)";
                 const [x, y] = arcLabel.centroid(d);
-                return `translate(${x}, ${y + 10})`; // 🔥 y 좌표를 +10 해서 조금 아래로 내림
+                return `translate(${x}, ${y + 10})`; // y 좌표를 +10 해서 조금 아래로 내림
             })
             .attr("stroke", "white")
             .selectAll("path")
@@ -93,26 +104,35 @@ const PieChart = (props: any) => {
             .attr("text-anchor", d => {
                 if (!d) return "middle"; // 만약 d가 없으면 중앙 정렬로 기본값 설정
                 const [x] = arcLabel.centroid(d);
-                return x > 0 ? "start" : "end"; // 오른쪽이면 start, 왼쪽이면 end
+                return "middle";
+                // return x > 0 ? "start" : "end"; // 오른쪽이면 start, 왼쪽이면 end
             })
-            // .call(text => text.append("tspan")
-            //     .attr("y", "-0.4em")
-            //     .attr("font-weight", "bold")
-            //     .text(d => d.data.name))
             .call(text => text.append("tspan")
                 .attr("x", 0)
                 .attr("y", "0.7em")
                 .attr("fill-opacity", 0.7)
-                .text(d => d.data.original));
-                // .text(d => d.data.value));
+                // .text(d => d.data.original));
+                // .text(d => {
+                //     // const persent =  d.data.value / sum * 100;
+                //     // let reText = parseFloat(persent.toFixed(2));
+                //     // return reText+'%';
+                //     // return persent;
+                //     // const re = 
+
+                //     return d.data["enn"]
+                // })
+                .text(d => {
+                    const persent =  d.data.value / sum * 100;
+                    let reText = parseFloat(persent.toFixed(1));
+                    return reText+'%';
+                    // return persent;
+                })
+            );
 
         // 범례
         const legendData = data.map(d => ({ name: d.name, color: color(d.name) }));
         const legend = svg.append("g")
-                // .attr("transform", `translate(${width / 2 - 400}, ${height / 2})`) // 위치 조정
-                // .attr("transform", `translate(${width - 150}, 20)`) // 위치 조정
                 .attr("transform", `translate(${width / 3 }, ${height / 10 - 10})`) 
-                // .attr("transform", `translate(${-width / 2}, ${-height / 2})`) 
                 .selectAll("g")
                 .data(legendData)
                 .join("g")
@@ -125,11 +145,6 @@ const PieChart = (props: any) => {
 
             // 범례 텍스트 추가
             legend.append("text")
-                // .attr("x", 20)  // 아이콘과 텍스트 간격
-                // .attr("y", 10)  // 아이콘과의 세로 정렬
-                // .attr("dy", "0.35em") // 줄 간격 조정
-                // .attr("font-size", "12px")
-                // .text(d => d.name);
                 .selectAll("tspan")
                 .data(d => d.name.split(" ")) // 띄어쓰기 기준으로 줄바꿈
                 .enter()
@@ -137,10 +152,6 @@ const PieChart = (props: any) => {
                 .attr("x", 20)
                 .attr("dy", "1em") // 줄 간격 조정
                 .text((d: any) => d);
-            
-            // legend.attr("transform", `translate(${width - 100}, ${height / 2})`);
-            // console.log("범례 요소들:", d3.selectAll(".legend").nodes());
-
 
         if (svgRef.current) {
             svgRef.current.innerHTML = ""; // 기존 내용 제거
@@ -151,13 +162,11 @@ const PieChart = (props: any) => {
   
     return (
         <>
-        {/* {conut}
-        <button type="button" onClick={ ()=>{ setConut(prev => prev+1)} }>click</button> */}
-            <div style={{ width: "500px", height: "300px", minHeight: "300px" }}>
+            <div className="piechart" style={{ width: "450px", height: "300px", minHeight: "300px" }}>
                 <svg ref={svgRef} width="100%" height="100%" />
             </div>
         </>
     );
   };
 
-export default PieChart;
+  export default PieChart;

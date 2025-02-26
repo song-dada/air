@@ -1,9 +1,10 @@
-
+@import '../../../setting/color.scss';
 *{
     margin: 0;
     padding: 0;
 }
 .legend{
+    margin-top: 15px;
     display: flex;
     align-items: center;
     // justify-content: center;
@@ -16,16 +17,16 @@
             background-color: blue;
         }
         .blue{
-            background-color: #00f;
+            background-color: $color-graph1;
         }
         .green{
-            background-color: #0f0;
+            background-color: $color-graph2;
         }
         .orange{
-            background-color: #ff0;
+            background-color: $color-graph3;
         }
         .red{
-            background-color: #f00;
+            background-color: $color-graph4;
         }
     }
 }

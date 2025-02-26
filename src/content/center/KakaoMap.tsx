@@ -80,12 +80,20 @@ export const KakaoMap = ({ onGetObj }: any) => {
   
   // 시도별 대표 마커 생성
   representativeStations.forEach(station => {
-    const marker = new window.kakao.maps.Marker({
+    const imgSrc = './img/red.png';
+    const imgSize = new window.kakao.maps.Size(35, 35);
+    const imgOption = { offset: new window.kakao.maps.Point(12, 35)};
+
+    const markerImage = new window.kakao.maps.MarkerImage(imgSrc, imgSize, imgOption);
+    const marker = new window.kakao.maps.Marker(
+      {
       position: new window.kakao.maps.LatLng(station.dmX, station.dmY),
       map: map,
-      title: station.sidoName
+      title: station.sidoName,
+      image: markerImage // 마커 이미지 적용
   });
-    
+
+
     // 시도 이름과 평균 정보를 표시하는 인포윈도우
     const cityStations = cityGroups[station.sidoName];
     const avgPm10 = Math.round(cityStations.reduce((sum, s) => sum + s.pm10Value, 0) / cityStations.length);
@@ -107,6 +115,7 @@ export const KakaoMap = ({ onGetObj }: any) => {
     window.kakao.maps.event.addListener(marker, 'click', function() {
       map.setLevel(9);
       map.setCenter(marker.getPosition());
+      infowindow.close();
     // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     //dageom
     // 스테이션 정보를 부모 컨포넌트로 넘김
@@ -181,7 +190,7 @@ export const KakaoMap = ({ onGetObj }: any) => {
       allMarkers.forEach(item => item.marker.setMap(null));
     } else if (currentLevel > 6) {
       // 중간 수준 (레벨 7-9) - 시도별 모든 측정소 표시
-      cityMarkers.forEach(marker => marker.setMap(null));
+      cityMarkers.forEach(marker => marker.setMap(map));
       
       // 현재 지도 영역에 있는 마커만 표시
       const bounds = map.getBounds();
@@ -242,8 +251,8 @@ const addLegend = (map: any) => {
   
   return (
     <div>
-      <h2>대기 오염 측정소 현황</h2>
-      <div id="map" style={{ width: "740px", height: "700px"}}></div>
+      {/* <h2>대기 오염 측정소 현황</h2> */}
+      <div id="map" style={{ width: "530px", height: "700px"}}></div>
     </div>
   );
 };
