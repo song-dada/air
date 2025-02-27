@@ -17,7 +17,7 @@ function Right( props: any ) {
     const [pm25List, setPm25List] = useState<any>([]);
     const [toDayList, setToDayList] = useState<any>([]);
     console.log("rigthe file props check")
-    console.log(props)
+    // console.log(props)
 
     const avgListCall = ( table: any) => {
         const q  = `SELECT 

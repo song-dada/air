@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Gothic+A1&family=Gowun+Dodum&display=swap');
 @import './setting/color.scss';
 
-::-webkit-scrollbar {display: none;}
 * {margin: 0; padding: 0; text-decoration: none;}
+
+body::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
 
 body {
     width: 100vw;

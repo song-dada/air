@@ -4,9 +4,10 @@ import Content from './content/content';
 import Footer from './footer/footer';
 import './app.scss';
 
+import { StationProvider } from './context/StationContext';
 const App = () => {
   return (
-    <>
+    <StationProvider>
       <body>
       <Header></Header>
         <div className='body'>
@@ -14,7 +15,7 @@ const App = () => {
         </div>
       <Footer/>
       </body>
-    </>
+    </StationProvider>
   );
 }
 

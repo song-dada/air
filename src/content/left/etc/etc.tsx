@@ -16,7 +16,7 @@ const Returnresulet = (todayVal: number, prevList: any, contrast: string ) =>{
         let khai = (todayVal - prevMaxVa) / prevMaxVa * 100;
         khai = parseFloat( khai.toFixed(2) );
         if(khai > 0){
-            str=`${contrast} 보다 지수가 높음`
+            str=`${contrast}보다 지수가 높음`
             // str=`${contrast} 보다 지수가 높습니다.`
             fontColor="#f00";
             uNd = '▲'
@@ -28,7 +28,7 @@ const Returnresulet = (todayVal: number, prevList: any, contrast: string ) =>{
                 uNd = '-'
             }
         }else if(khai < 0){
-            str=`${contrast} 보다 지수가 낮음`
+            str=`${contrast}보다 지수가 낮음`
             // str=`${contrast} 보다 지수가 낮습니다.`
 
             fontColor="#00f"
@@ -60,17 +60,30 @@ function Etc( props: any ){
         setShowlist([]);
 
         const row = props.getOneRow;
+        const yesterDayRow = props.getYesterDayRow;
         const prevWeekRow = props.getPrevWeekRow;
         const prevMonthRow = props.getPrevMonthRow;
 
-        let pWv: any[]=[];
         let todayVal = 0;
         if(row !== undefined){
             todayVal = row["khaiValue"];
         }
-
+        
+        // 전 주
+        let pYv: any[]=[];
+        if(yesterDayRow !== undefined){
+            for (const key in yesterDayRow) {
+                    // console.log(key)
+                if(key.includes("Value")){
+                    const val = khaiVFunc( key, yesterDayRow[key])
+                    pYv.push( val );
+                }
+            }
+        }
+        
+        // 전 주
+        let pWv: any[]=[];
         if(prevWeekRow !== undefined){
-            // 전 주
             for (const key in prevWeekRow) {
                     // console.log(key)
                 if(key.includes("Value")){
@@ -79,9 +92,9 @@ function Etc( props: any ){
                 }
             }
         }
+        // 전 달
         let pMv: any[]=[];
         if (prevMonthRow !== undefined) {
-            // 전 달
             for (const key in prevMonthRow) {
                 // console.log(key)
                 const val = khaiVFunc( key, prevMonthRow[key])
@@ -91,9 +104,10 @@ function Etc( props: any ){
         }
         if(row !== undefined && prevWeekRow !== undefined && prevMonthRow !== undefined){
             setShowlist(prev => {
-                const newD = Returnresulet( todayVal, pWv, '지난주' ); // 전 주
-                const newD2 = Returnresulet( todayVal, pMv, '지난달' ); // 전 달
-                return [newD, newD2];
+                const newY = Returnresulet( todayVal, pYv, '어제' ); // 어제
+                const newW = Returnresulet( todayVal, pWv, '지난주' ); // 전 주
+                const newM = Returnresulet( todayVal, pMv, '지난달' ); // 전 달
+                return [newY, newW, newM  ];
             })
 
         }

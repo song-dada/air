@@ -5,7 +5,7 @@ import * as d3 from "d3";
 
 const BarChart = (props: any) => {
     const svgRef = useRef<SVGSVGElement | null>(null);
-    console.log(props.getTodayList); // 넘겨 온 값 확인
+    // console.log(props.getTodayList); // 넘겨 온 값 확인
     // const [conut, setConut] = useState(0);
     
     useEffect(() => {

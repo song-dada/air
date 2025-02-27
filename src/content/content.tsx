@@ -4,8 +4,9 @@ import alasql from "alasql";
 import Left from './left/left';
 import Center from './center/center';
 import Right from './right/right';
-import Popup from './popup/popup'
-// import Popup from './popup/popup';
+
+import StatData from './statistics/statistics';
+
 // dageom
 
 import './content.scss'
@@ -21,7 +22,7 @@ function Content() {
     // *
     const [predictionDatas, setPredictionDatas] = useState<any[]>([])
     
-    const [mode, setMode] = useState('show');
+    const [mode, setMode] = useState('close');
     const [sido, setSido] = useState('');
     const [station, setStation] = useState('');
 
@@ -30,6 +31,7 @@ function Content() {
     const [oneRow, setOneRow] = useState<any>([])
     const [prevWeekRow, setPrevWeekRow] = useState<any>([])
     const [prevMonthRow, setPrevMonthRow] = useState<any>([])
+    const [yesterDay, setYesterDay] = useState<any>([])
 
     // 자료 가져옴
     useEffect(() => {
@@ -99,10 +101,18 @@ function Content() {
     useEffect(() => {
         let dataList: any[] = [];
             let query = 'SELECT DISTINCT sidoName FROM ?';
-            // console.log(allDatas)
             
             dataList = alasql(query,[allDatas]);
-            setSidoList(dataList);
+            console.log(allDatas)
+            console.log(dataList)
+
+            const list = dataList.map((item) => ({
+                key: item.sidoName,
+                value: item.sidoName
+            }));
+            console.log(list)
+            setSidoList(list);
+            // setSidoList(dataList);
 
             // 처음 랜더시 나오는 데이터
             if (dataList.length > 0) { 
@@ -121,6 +131,17 @@ function Content() {
             query+=`WHERE sidoName="${sido}" `; // ORDER BY stationName`;
         }
         dataList = alasql(query,[allDatas]) ;
+
+        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+       const list = dataList.map((item) => ({
+                key: item.sidoName,
+                value: item.sidoName
+            }));
+
+        setStationList( list );
+        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
         if(dataList.length>0){
             const oneRow = dataList[0];
 
@@ -161,6 +182,7 @@ function Content() {
                     let list = [... data, dataList[0]];
                     // console.log(list)
                     setPrevWeekDatas( list );
+                    setYesterDay(data[data.length-1])
                 })
                 .catch((error) => {
                 console.log(error)
@@ -190,6 +212,9 @@ function Content() {
     }, [oneRow]);
     // 지난달 데이터를 가져오고
     // 지난달 데이터가 설정되면 // 주 값 가져옴
+    
+    
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     useEffect(()=>{
        
         if(prevWeekDatas.length > 0){
@@ -210,10 +235,13 @@ function Content() {
             }
         }
     },[prevWeekDatas]);
+    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
     const giveStation=( itme: any)=>{
         setStation(itme);
     }
+
+    
     return(
         <>
         <div className="mainContentArea" style={{display: 'flex'}}>
@@ -222,9 +250,17 @@ function Content() {
             getOneRow={ oneRow }
             getPrevWeekRow={ prevWeekRow }
             getPrevMonthRow={ prevMonthRow }
-            getPrevWeekDatas={prevWeekDatas} />
+            // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+            getYesterDay={yesterDay}
+            getPrevWeekDatas={ prevWeekDatas } />
+            {/* // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
+
             <Center getOneRow={ oneRow }
-            onSetStation={( reStstion: string )=>{ giveStation( reStstion) } } />
+            onSetStation={( reStstion: string )=>{ giveStation( reStstion) } }
+            // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+            onSetMode={(mode: string)=>{setMode( mode )}}
+            // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+            />
             <Right
             getData={ allDatas }
             getOneRow={ oneRow }
@@ -234,9 +270,26 @@ function Content() {
             getPrevWeekDatas={prevWeekDatas}/>
 
         </div>
-        <div className="popUpContentArea">
-            {/* <Popup getMode={mode}/> */}
-        </div>
+        {/* // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
+        {/* <div className="popUpContentArea">
+            <Popup getMode={mode} 
+            getData={ allDatas }
+            // getSidoList = {sidoList}
+            onSidoList={sidoList}
+
+            onSetMode={(mode: string)=>{setMode( mode )}}
+            />
+        </div> */}
+        {/* // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
+        {/* <div className='statisics'> */}
+            <StatData
+                getMode={mode}
+                getData={ allDatas }
+                onSidoList={sidoList}
+                onSetMode={(mode: string)=>{setMode( mode )}}
+
+            ></StatData>
+        {/* </div> */}
 
         </>
     )

@@ -65,65 +65,76 @@
     background-color: transparent;
 }
 
+
+// 통계
+.statisics {
+    position: absolute;
+    top: 0;
+    background-color: #fff;
+    z-index: 4;
+    width: 90vw;
+    height: 90%;
+    // padding: 15%;
+}
 // ******************************
 
-@media (max-width: 480px) {
-    header {
-        width: 100%;
-    }
+// @media (max-width: 480px) {
+//     header {
+//         width: 100%;
+//     }
 
-    .didid {
-        height: auto;
+//     .didid {
+//         height: auto;
         
-        flex-direction: column;
-        align-items: center;
-    }
+//         flex-direction: column;
+//         align-items: center;
+//     }
 
-    .leftArea {
-        order: 2;
-        flex: 1;
+//     .leftArea {
+//         order: 2;
+//         flex: 1;
 
-        .inc {
-            width: 100%;
-            height: 290px;
-        }
-    }
+//         .inc {
+//             width: 100%;
+//             height: 290px;
+//         }
+//     }
 
-    .centerArea {
-        order: 1;
+//     .centerArea {
+//         order: 1;
 
-        .titleArea {
-            width: calc(80% - 30px);
-            height: 10px;
-            margin-bottom: 0;
+//         .titleArea {
+//             width: calc(80% - 30px);
+//             height: 10px;
+//             margin-bottom: 0;
             
-            position: absolute;
-            z-index: 2;
-            top: 10%;
-            left: 50%;
-            transform: translate(-50%);
-        }
+//             position: absolute;
+//             z-index: 2;
+//             top: 10%;
+//             left: 50%;
+//             transform: translate(-50%);
+//         }
 
-        .mapArea {
-            margin: 0;
-            padding: 0;
-            height: auto;
+//         .mapArea {
+//             margin: 0;
+//             padding: 0;
+//             height: auto;
 
-            background-color: transparent;
-            box-shadow: none;
-        }
+//             background-color: transparent;
+//             box-shadow: none;
+//         }
 
-        #map {
-            width: 100%;
-        }
-    }
+//         #map {
+//             width: 100%;
+//         }
+//     }
 
-    .rightArea {
-        order: 3;
-        flex: 1;
+//     .rightArea {
+//         order: 3;
+//         flex: 1;
 
-        .linegraph {
-            height: 310px;
-        }
-    }
-}
+//         .linegraph {
+//             height: 310px;
+//         }
+//     }
+// }

@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { KakaoMap } from './KakaoMap'
+import { TbMapPinSearch } from "react-icons/tb";
 
 import './center.scss'
 
@@ -51,23 +52,23 @@ function Clock() {
 
 // dageom
 
-function Center({onSetStation, getOneRow}: any) {
+function Center( props: any) {
     const [sido, setSido] = useState('rlqhs');
     const [station, setStation] = useState('rlqhs');
     const [address, setAddress] = useState('rlqhs');
 
     const alretA = (item: any)=>{
-        onSetStation( item );
+        props.onSetStation( item );
     }
 
     useEffect(()=>{
-        const oneRow = getOneRow;
+        const oneRow = props.getOneRow;
         if(oneRow !== undefined){
             setSido(oneRow.sidoName);
             setStation(oneRow.stationName);
             setAddress(oneRow.addr);
         }
-    },[getOneRow]);
+    },[props.getOneRow]);
 
     return(
         <>
@@ -78,6 +79,8 @@ function Center({onSetStation, getOneRow}: any) {
                         <p>{station}</p>
                     </div>
                     <p>{address}</p>
+                    <button type="button" onClick={ () => props.onSetMode("show")  }><TbMapPinSearch /></button>
+                    {/* <button type="button" onClick={ props.onSetMode("show") }><TbMapPinSearch /></button> */}
                 </div>
                 <div className="mapArea">
                     <KakaoMap onGetObj={ (item: any)=> alretA( item ) }/>

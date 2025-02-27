@@ -8,7 +8,7 @@ interface DataPoint {
     value: number;
     dataTime: string;
     pm10Value: number;
-  }
+}
 
 function Weekgraph( props: any ) {
     const svgRef = useRef<SVGSVGElement | null>(null);
@@ -16,12 +16,8 @@ function Weekgraph( props: any ) {
     useEffect(() => {
       const prevWeekDatas = props.getPrevWeekDatas;
       const data: any[] = prevWeekDatas;
-      // console.log(prevWeekDatas);
-      // console.log("Weekgraph file props check")
-      // upd2/air2/src/content/left/weekgraph/weekgraph.tsxconsole.log(props)
-      
+
       // 차트 크기 설정
-      // const margin = { top: 10, right: 20, bottom: 20, left: 20 };
       const margin = { top: 10, right: 20, bottom: 20, left: 25 };
       const width = 500 - margin.left - margin.right;
       const height = 200 - margin.top - margin.bottom;
@@ -30,11 +26,6 @@ function Weekgraph( props: any ) {
       const x = d3.scaleBand()
         .domain(data.map(d => d.dataTime))  // x축 데이터 범위 (시간)
         .range([0, width]);
-
-      // const y = d3.scaleLinear()
-      //   .domain([0, d3.max(data, d => d.pm10Value) as number])  // y축 데이터 범위 (값)
-      //   .nice()
-      //   .range([height, 0]);
 
       const y = d3.scaleLinear()
         .domain([0, 200])  // y축 데이터 범위 (값)
@@ -49,11 +40,9 @@ function Weekgraph( props: any ) {
       // SVG 요소 선택
       const svg = d3.select(svgRef.current)
         .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        // .append('g')
-        // .attr('transform', `translate(${margin.left},${margin.top})`);
+        .attr('height', height + margin.top + margin.bottom);
 
-        svg.selectAll("*").remove();
+      svg.selectAll("*").remove();
 
       // 선 그리기
       svg.append('path')
@@ -61,10 +50,9 @@ function Weekgraph( props: any ) {
         .attr('class', 'line')
         .attr('d', line)
         .attr('fill', 'none')
-        .attr('stroke', 'steelblue')
+        .attr('stroke', '#3F8EF5')
         .attr('stroke-width', 2)
         .attr('transform', `translate(${margin.left},0)`);
-
 
       // x축 추가
       svg.append('g')
@@ -76,19 +64,19 @@ function Weekgraph( props: any ) {
         .attr('transform', `translate(${margin.left},${margin.top})`)
         .call(d3.axisLeft(y));
 
-      svg.selectAll(".pm10-label")
-      .data(data)
-      .enter()
-      .append("text")
-      .attr("class", "pm10-label")
-      .attr("x", d => x(d.date)!)  // ✅ X축 좌표 설정
-      .attr("y", d => y(d.pm10Value ?? d.value)! - 10)  // ✅ Y축 좌표 설정
-      .text(d => d.pm10Value ?? d.value)
-      .attr("font-size", "12px")
-      .attr("fill", "blue")
-      .attr("text-anchor", "middle")
-      .attr("transform", `translate(${margin.left},0)`);
-
+      // 선 위에 데이터 값 표시
+      svg.selectAll('.data-label')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('class', 'data-label')
+        .attr('x', (d) => x(d.dataTime) as number + (x.bandwidth() / 2)) // x 위치
+        .attr('y', (d) => y(d.pm10Value)) // y 위치
+        .attr('dy', -5)  // 텍스트 위치 조정 (위로 조금 올리기)
+        .attr('text-anchor', 'middle') // 텍스트 중앙 정렬
+        .attr('fill', '#3F8EF5') // 텍스트 색
+        .attr('transform', `translate(${margin.left},0)`)
+        .text((d) => d.pm10Value); // 값 표시
 
     }, [props]);
 
@@ -97,7 +85,6 @@ function Weekgraph( props: any ) {
       <svg ref={svgRef}></svg>
     </div>
   );
-
 }
 
-export default Weekgraph
+export default Weekgraph;

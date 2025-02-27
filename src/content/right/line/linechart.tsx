@@ -31,7 +31,7 @@ function LineChart(props: Props) {
             }
             list.push( insertV )
           }
-          console.log(list);
+          // console.log(list);
           setPm10Data(list);
         }
     
