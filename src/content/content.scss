@@ -69,11 +69,16 @@
 // 통계
 .statisics {
     position: absolute;
-    top: 0;
+    // display: flex;
+    // justify-content: center; /* 수평 가운데 정렬 */
+    // align-items: center;
+    // top: 0;
+    // top: 50%;
+    // margin-top: -50px; /* height의 50% */
     background-color: #fff;
     z-index: 4;
     width: 90vw;
-    height: 90%;
+    height: 93%;
     // padding: 15%;
 }
 // ******************************
@@ -138,3 +143,44 @@
 //         }
 //     }
 // }
+
+@media (max-width: 1300px) {
+    .statisics {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .listSky {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translate(5%);
+    }
+
+    .label {
+        transform: translateX(60px);
+        // transform: translateY(5px);
+        margin-top: 1%;
+    }
+  }
+
+  @media (max-width: 780px) {
+    .statisics {
+        width: 100vw;
+        height: 100vh;
+    }
+    .label {
+        // transform: translateX(60px);
+        // transform: translateY(5px);
+        margin-top: 1%;
+    }
+
+    .timeSearch > button {
+        transform: translateX(60px);
+    }
+  }

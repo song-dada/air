@@ -3,9 +3,10 @@
 .listSky {
     position: absolute;
     top: 0;
+    // transform: translate(0 -50%);
     z-index: 4;
     width: 90vw;
-    // height: 90vh;
+    // height: 93vh;
 
     // margin: 5%;
     display: flex;
@@ -43,10 +44,12 @@ h2 {
 .timeSearch {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 
     span {
         margin-right: 10px;
     }
+    
 }
 
 .selectArea {
@@ -85,7 +88,7 @@ h2 {
     }
     
     .listData {
-        height: 180px; //줄당 30px
+        height: 480px; //줄당 30px
         overflow: auto;
         border: 1px solid #dad9e4;
         margin-bottom: 15px;
@@ -106,13 +109,30 @@ h2 {
     }
 
     
-    .listGraph {
-        width: 100%;
-        height: 300px;
-        border: 1px solid #dad9e4;
-    }
+    // .listGraph {
+    //     width: 100%;
+    //     height: 300px;
+    //     border: 1px solid #dad9e4;
+    // }
 }
 
+
+.timeSearch > button {
+    margin-right: 15px;
+    
+}
+.label {
+    display: flex;
+}
+label {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+
+    span {
+        margin-left: 3px;
+    }
+}
 
 // .l1 {
 //     width: 80%;
@@ -126,8 +146,9 @@ h2 {
 
 
 button {   //버튼 태그
-    width: 100px;
+    width: 80px;
     height: 32px;
+    padding: 5px;
 
     background-color: #d5e1f0;
     // background-color: #8aafff;
@@ -136,8 +157,8 @@ button {   //버튼 태그
 
 }
 
-select {
-    width: 240px;
+select  {
+    width: 23%;
     height: 30px;
     padding: 0 15px;
 
@@ -147,6 +168,20 @@ select {
     border: 1px solid #81808d;
     color: #333;
 }
+
+#prev, #now {
+    width: 20%;
+    height: 30px;
+    padding: 0 15px;
+
+    border-radius: 10px;
+    margin-right: 15px;
+
+    border: 1px solid #81808d;
+    color: #333;
+}
+
+
 
 // 기본 테이블 스타일
 table {
@@ -183,3 +218,6 @@ table {
     //   background-color: #e0e0e0; // 호버 시 색상 변화
     // }
   }
+
+
+ 

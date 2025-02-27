@@ -278,7 +278,7 @@ export const KakaoMap = ({ onGetObj }: any) => {
     const legendContent = document.createElement('div');
     legendContent.className = 'legend';
     legendContent.innerHTML = `
-      <div style="position:absolute;bottom:30px;left:10px;z-index:1000;background:white;padding:10px;border-radius:5px;box-shadow:0 0 5px rgba(0,0,0,0.2);width:300px;">
+      <div style="position:absolute;bottom:30px;left:10px;z-index:4;background:white;padding:10px;border-radius:5px;box-shadow:0 0 5px rgba(0,0,0,0.2);width:300px;">
         <h4 style="margin:0 0 8px 0;font-size:14px;">대기질 정보</h4>
         <div><span style="display:inline-block;width:10px;height:10px;background:red;"></span> 시도 대표 측정소</div>
         <div><span style="display:inline-block;width:10px;height:10px;background:blue;"></span> 개별 측정소</div>

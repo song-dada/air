@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState, forwardRef } from "react";
 import './statistics.scss';
 import alasql from "alasql";
-import { IoCloseSharp, IoSearch } from "react-icons/io5";
-import { useReactToPrint} from "react-to-print";
+import { IoCloseSharp, IoSearch, IoPrintSharp } from "react-icons/io5";
+import { useReactToPrint } from "react-to-print";
 // import { UseReactToPrintFn } from 'UseReactToPrintOptions';
 
 
@@ -66,7 +66,7 @@ const OrderToggl=(props: any)=>{
 
 
     return(
-        <>
+        <div className="label">
             <label>
             <input type="radio" name="order" id="desc" checked={select} onClick={(e)=>chanVal(e.currentTarget.id)}/>
                 <span>내림차순</span>
@@ -75,11 +75,11 @@ const OrderToggl=(props: any)=>{
             <input type="radio" name="order" id="asc" checked={!select} onClick={(e)=>chanVal(e.currentTarget.id)}/>
                 <span>오름차순</span>
             </label>
-        </>
+        </div>
     )
 }
 // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-const Table = forwardRef<{}, {}>(({ getTable, getOrder, content }, ref) =>{
+const Table = ({ getTable, getOrder, onRef}: any) =>{
     const [showList, setShowList] = useState<any[]>([])
     // console.log(props)
     // console.log(props.getTable)
@@ -100,7 +100,7 @@ const Table = forwardRef<{}, {}>(({ getTable, getOrder, content }, ref) =>{
     
     return (
         <>
-        <table style={{ borderCollapse: 'collapse' }} ref={ ref } content={ content }>
+        <table style={{ borderCollapse: 'collapse' }} ref={ onRef }>
             <thead>
                 <tr>
                     <th>날짜</th>
@@ -124,17 +124,16 @@ const Table = forwardRef<{}, {}>(({ getTable, getOrder, content }, ref) =>{
                         <td>{item["이산화황"]}</td>
                         <td>{item["일산화탄소"]}</td>
                     </tr>
-                ))};
+                ))}
             </tbody>
         </table>
         </>
     )
-});
+};
 // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 function StatData( props: any) {
     const [showMode, setShowMode] = useState<boolean>(false)
-    const [show, setShow] = useState<any>('')
     const [sido, setSido] = useState("")
     const [sidoList, setSidoList] = useState<any[]>([])
     const [allDatas, setAllDatas] = useState([])
@@ -249,13 +248,10 @@ function StatData( props: any) {
     
         }
 
-        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-        const printRef = useRef<HTMLTableElement | null>(null)
+        const contentRef = useRef<HTMLTableElement>(null!)
+        const printBtn = useReactToPrint({ contentRef });
 
-        const printBtn = useReactToPrint({
-            content: () => printRef.current,
-        });
-        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+        
     return(
         <div className='statisics' style={ showMode ? {display: "block"}: {display: "none"}}>
 
@@ -273,27 +269,21 @@ function StatData( props: any) {
                             getStationList={stationList} 
                             onSetStation={(day: string)  => setStation(day)}
                              />
-                             {/* {d} */}
                     </div>
                     <div className='timeSearch'>
                         <span>조회 기간</span>
-                        {/* <PeriodSelect></PeriodSelect> */}
                         <input type="date" name="prev" id="prev" onChange={ e => setPrevDay(e.currentTarget.value)} />
                         <input type="date" name="now" id="now"onChange={ e => setLastDay(e.currentTarget.value)}/>
                         <button type="button" onClick={ ()=> reQuest() }> <IoSearch /> </button>
                         <OrderToggl onSetOrder={(value: string) => setOrder( value )}/>
-{/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
-                        <button type="button" onClick={()=>{console.log(printRef.current); printBtn()}}> 프린트 버튼 입니다.</button>
-{/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
-
                     </div>
                 </div>
                 <div className='listTable'>
-                    <h3>전월대비 표 데이터</h3>
+                    <h3>대기질 정보표 데이터</h3>
                     <div className="listData">
-                        <Table getTable={ printRows } getOrder={order} ref={ printRef } content={ printRef.current } />
+                        <Table getTable={ printRows } getOrder={order} onRef={contentRef} />
                     </div>
-                    <div className="listGraph"></div>
+                    <button type="button" onClick={()=>{console.log(contentRef); printBtn()}}><IoPrintSharp/></button>
                 </div>
             </div>
         </div>
