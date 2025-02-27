@@ -11,10 +11,8 @@ import { useStation } from "../../../context/StationContext";
 
 
 function Alert(props: any) {
-    //
     const [showPopup, setShowPopup] = useState(false);
     const { setSelectedStation, selectedStation } = useStation(); 
-    //
 
     let title: string =''
     let printText: string='';
@@ -25,7 +23,6 @@ function Alert(props: any) {
     let yellowStations: any[] = props.onYellow || [];
     let hasStations = redStations.length > 0 || yellowStations.length > 0;
     let totalStations = redStations.length + yellowStations.length;
-    //
 
     useEffect(() => {
         if (!selectedStation) return;
@@ -164,9 +161,6 @@ function AlertArea( {onAdata}: any ) {
     }, [selectedStation]);
 
  useEffect(() => {
-        // 데이터 로깅 (디버깅용)
-        console.log('Original data:', onAdata);
-        
         try {
             // 미세먼지 주의보
             let query = 'SELECT stationName, pm10Value FROM ? WHERE pm10Value >= 81 AND pm10Value <= 150';

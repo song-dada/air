@@ -4,6 +4,7 @@ import './sass/item.scss'
 import { khaiVFunc  } from "../../khaiVfunc";
 
 // dageom
+
 interface getData{
     name: string
     unit: string
@@ -23,55 +24,80 @@ const Create = ({ onKey, onValue, getRow, onPush}:any) => {
     return (
       <div className="half-circle-progress infoItem">
         <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
-        {/* 반원 그리는곳 표시 */}
-          <path
+          {/* <path
+          // <!-- 배경 반원 -->
             d="M 10,50 A 40,40 0 0 1 90,50"
             fill="none"
-            stroke="#FF595E"
+            stroke="#e0e0e0"
             strokeWidth="15"
+            // strokeLinecap="round"
+          /> */}
+          <path
+          // <!-- 프로그레스 바 -->
+            d="M 10,50 A 40,40 0 0 1 90,50"
+            fill="none"
+            stroke="#FF595E"//{ color }
+            strokeWidth="15"
+            // strokeLinecap="round" // <!-- 끝부분 둥글게 -->
             strokeDasharray="125.6"
+            // strokeDashoffset={`${125.6 - (onValue / 200) * 125.6}`}
+            // strokeDashoffset={`${125.6 - ( 4/4) * 125.6}`}
             strokeDashoffset={`${125.6 - ( 4/4) * 125.6}`}
           />
           <path
+          // <!-- 프로그레스 바 -->
             d="M 10,50 A 40,40 0 0 1 90,50"
             fill="none"
-            stroke="#FEE596"
+            stroke="#FEE596"//{ color }
             strokeWidth="15"
+            // strokeLinecap="round" // <!-- 끝부분 둥글게 -->
             strokeDasharray="125.6"
+            // strokeDashoffset={`${125.6 - (onValue / 200) * 125.6}`}
             strokeDashoffset={`${125.6 - ( 3/4) * 125.6}`}
           />
           <path
+          // <!-- 프로그레스 바 -->
             d="M 10,50 A 40,40 0 0 1 90,50"
             fill="none"
-            stroke="#8be001"
+            stroke="#8be001"//{ color }
             strokeWidth="15"
+            // strokeLinecap="round" // <!-- 끝부분 둥글게 -->
             strokeDasharray="125.6"
+            // strokeDashoffset={`${125.6 - (onValue / 200) * 125.6}`}
             strokeDashoffset={`${125.6 - ( 2/4) * 125.6}`}
           />
           <path
+          // <!-- 프로그레스 바 -->
             d="M 10,50 A 40,40 0 0 1 90,50"
             fill="none"
-            stroke="#3F8EF5"
+            stroke="#3F8EF5"//{ color }
             strokeWidth="15"
+            // strokeLinecap="round" // <!-- 끝부분 둥글게 -->
             strokeDasharray="125.6"
+            // strokeDashoffset={`${125.6 - (onValue / 200) * 125.6}`}
             strokeDashoffset={`${125.6 - ( 1/4) * 125.6}`}
           />
 
           <defs>
             <clipPath id="gaugeClip">
               <path d="M 10,50 A 40,40 0 0 1 90,50 L50,50 Z" />
+              
             </clipPath>
           </defs>
-        {/* 바늘구간 */}
           <polygon
             points="49,25 51,25 50,2"
             stroke="none" 
             fill="#333"
             strokeWidth="2" strokeLinecap="round"
             transform={`rotate(${(getData.value / 200) * 180 - 90}, 50, 50)`}
-            clip-path="url(#gaugeClip)" />
+            clip-path="url(#gaugeClip)" 
+          />
+
+
+
+      
+
         </svg>
-        
         <div className="progress-text">
           <div className="circlenN">{getData.name}</div>
           <div className="circlestate">{state}</div>
@@ -85,6 +111,7 @@ const Create = ({ onKey, onValue, getRow, onPush}:any) => {
           </div>
         </div>
       </div>
+
     );
   }else{
     return (
@@ -97,11 +124,10 @@ function App(props: any) {
     let items: any[]=[];
     for (const key in props.onOneRow) {
       if(key.includes("Value")) { // 값인경우
-        items.push( 
-        <Create onKey={key} 
+        items.push( <Create onKey={key} 
           onValue={props.onOneRow[key]}
-          getRow={props.onOneRow} />
-        );
+          getRow={props.onOneRow}
+          /> );
       }
     }
 

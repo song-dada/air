@@ -1,10 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { KakaoMap } from './KakaoMap'
-import { TbMapPinSearch } from "react-icons/tb";
 
 import './center.scss'
 
-// hyomin
 function Clock() {
     const nowClock = () => {
         const today = new Date();
@@ -52,23 +50,24 @@ function Clock() {
 }
 
 // dageom
-function Center( props: any) {
+
+function Center({onSetStation, getOneRow}: any) {
     const [sido, setSido] = useState('rlqhs');
     const [station, setStation] = useState('rlqhs');
     const [address, setAddress] = useState('rlqhs');
 
     const alretA = (item: any)=>{
-        props.onSetStation( item );
+        onSetStation( item );
     }
 
     useEffect(()=>{
-        const oneRow = props.getOneRow;
+        const oneRow = getOneRow;
         if(oneRow !== undefined){
             setSido(oneRow.sidoName);
             setStation(oneRow.stationName);
             setAddress(oneRow.addr);
         }
-    },[props.getOneRow]);
+    },[getOneRow]);
 
     return(
         <>
@@ -79,12 +78,11 @@ function Center( props: any) {
                         <p>{station}</p>
                     </div>
                     <p>{address}</p>
-                    <button type="button" onClick={ () => props.onSetMode("show")  }><TbMapPinSearch /></button>
-                </div>
-                <div className="mapArea">
-                    <KakaoMap onGetObj={ (item: any)=> alretA( item ) }/>
                     <Clock/>
                 </div>
+                {/* <div className="mapArea">
+                    <KakaoMap onGetObj={ (item: any)=> alretA( item ) }/>
+                </div> */}
             </div>
         </>
     )

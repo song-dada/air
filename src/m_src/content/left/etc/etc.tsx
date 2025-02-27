@@ -18,7 +18,7 @@ const Returnresulet = (todayVal: number, prevList: any, contrast: string ) =>{
             fontColor="#f00"; uNd = '▲';
             if(khai == Infinity){
                 khai=0.0;
-                str=`${contrast}와/과 0% 이하 차이`;
+                str=`${contrast} 와/과 0% 이하의 차이`;
                 fontColor="#ddd"; uNd = '-';
             }
         }else if(khai < 0){
@@ -87,10 +87,10 @@ function Etc( props: any ){
         }
         if(row !== undefined && prevWeekRow !== undefined && prevMonthRow !== undefined){
             setShowlist(prev => {
-                const newY = Returnresulet( todayVal, pYv, '어제' ); // 어 제
+                // const newY = Returnresulet( todayVal, pYv, '어제' ); // 어 제
                 const newW = Returnresulet( todayVal, pWv, '지난주' ); // 전 주
                 const newM = Returnresulet( todayVal, pMv, '지난달' ); // 전 달
-                return [newY, newW, newM  ];
+                return [newW, newM  ];
             })
         }
     },[props.getRow, props.getPrevRow, props.getPrevMonthRow])

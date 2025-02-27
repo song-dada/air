@@ -11,10 +11,12 @@ interface getList {
     pm25Value?: number;
 }
 function Right( props: any ) {
+    const [tryQuery, setTryQuery] = useState<boolean>(true);
     const [pm10List, setPm10List] = useState<any>([]);
     const [pm25List, setPm25List] = useState<any>([]);
     const [toDayList, setToDayList] = useState<any>([]);
     console.log("rigthe file props check")
+    console.log(props)
 
     const avgListCall = ( table: any) => {
         const q  = `SELECT 
@@ -24,6 +26,8 @@ function Right( props: any ) {
         FROM ?
         GROUP BY sidoName`;
         const result: any[] = alasql(q, [table])
+        // console.log("ㅡㅡㅡㅡㅡㅡresultㅡㅡㅡㅡㅡㅡ")
+        // console.log(result)
         let list: any[] = [];
         for (let i = 0; i < result.length; i++) {
             let returnData: getList = { 
@@ -31,17 +35,19 @@ function Right( props: any ) {
                 pm10Value: Math.ceil(result[i].pm10Value),
                 pm25Value: Math.ceil(result[i].pm25Value)
               };
-            list.push(returnData);
+              list.push(returnData);
         }
-        return list;
+        return list
     }
 
     useEffect(()=>{
+        // console.log(tryQuery)
         if (props.getData?.length > 0) {
            const avgList = avgListCall(props.getData);
            setToDayList(avgList);
         }
 
+        // console.log(toDayList)
         const today = new Date();
         const threeDaysAgo = new Date();
         threeDaysAgo.setDate(today.getDate() - 3);
@@ -81,6 +87,8 @@ function Right( props: any ) {
                 props.getOneRow, props.onStation, todayStr
             ]);
 
+            // console.log(result);
+
             setPm10List(result);
             setPm25List(result);
         }
@@ -88,9 +96,10 @@ function Right( props: any ) {
 
     return(
         <div className="rightArea">
-            <Alert onAdata={ props.getData } ></Alert>
+            {/* <Alert onAdata={ props.getData } ></Alert> */}
             <div className="ratiograph">
                 <h3>시도별 평균 대기정보</h3>
+                {/* <PieChart onOneRow={ props.getOneRow }/> */}
                 <BarChart getTodayList={ toDayList }/>
             </div>
             <div className="linegraph">

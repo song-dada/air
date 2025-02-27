@@ -24,4 +24,5 @@ function LegendRow(){
         </>
     )
 }
+
 export default LegendRow;

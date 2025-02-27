@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { khaiVFunc  } from "../../khaiVfunc";
 import './barChart.scss'
 import * as d3 from "d3";
 
 const BarChart = (props: any) => {
     const svgRef = useRef<SVGSVGElement | null>(null);
-    // console.log(props.getTodayList); // 넘겨 온 값 확인
-    // const [conut, setConut] = useState(0);
-    
+
     useEffect(() => {
         const data = props.getTodayList;
 
@@ -23,16 +20,9 @@ const BarChart = (props: any) => {
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // X축 스케일 (수치 값)
-        // const x = d3.scaleLinear()
-        // const maxValue = d3.max(data, d => Math.max(d.pm10Value, d.pm25Value)) ?? 0;
         const x = d3.scaleLinear()
             .domain([0,200]) // 수정
-            // .nice()
             .range([0, width]);
-        // .domain([0, d3.max((data, d: any) => Math.max(d.pm10Value, d.pm25Value)) as unknown as number])
-        // .nice()
-        // .range([0, width]);
 
         // Y축 스케일 (도시 이름)
         const y = d3.scaleBand()
@@ -80,21 +70,19 @@ const BarChart = (props: any) => {
         .attr("class", "y-axis")
         .call(d3.axisLeft(y));
 
-        // 기준선 값 (예: 100)
+        // 기준선 값
         const thresholdValue = 80; 
 
         // 기준선 추가
         svg.append("line")
             .attr("class", "threshold-line")
-            .attr("x1", x(thresholdValue))  // ✅ X축 위치 (값에 따라 설정)
-            .attr("x2", x(thresholdValue))  // ✅ X축 위치 동일
+            .attr("x1", x(thresholdValue))  // X축 위치 (값에 따라 설정)
+            .attr("x2", x(thresholdValue))  // X축 위치 동일
             .attr("y1", 0)  // 맨 위부터 시작
             .attr("y2", height)  // 맨 아래까지
-            .attr("stroke", "#ccc")  // ✅ 선 색상 (예제처럼 빨강)
-            .attr("stroke-width", 2)  // ✅ 선 두께
+            .attr("stroke", "#ccc")  // 선 색상 (예제처럼 빨강)
+            .attr("stroke-width", 2)  // 선 두께
             .attr("stroke-dasharray", "5,5");  // 🔹 점선 스타일 (원하면 사용)
-
-
 
         // 범례 추가
         const legend = svg.append("g")
@@ -129,20 +117,13 @@ const BarChart = (props: any) => {
         .attr("fill", "#333");
 
 
-
-        // attr("x1", x(thresholdValue))  // ✅ X축 위치 (값에 따라 설정)
-        //     .attr("x2", x(thresholdValue))  // ✅ X축 위치 동일
-        //     .attr("y1", 0)  // 맨 위부터 시작
-        //     .attr("y2", height)  // 맨 아래까지
         legend.append("line")
         .attr("x1", 0)
         .attr("y1", 65)
         .attr("x2", 20)
         .attr("y2", 65)
-        // .attr("width", 15)
-        // .attr("height", 15)
         .attr("stroke", "#ccc")
-        .attr("stroke-width", 3)  // ✅ 선 두께
+        .attr("stroke-width", 3)  // 선 두께
         .attr("stroke-dasharray", "5,5")
         .attr("fill", "#ccc");
 
@@ -157,11 +138,6 @@ const BarChart = (props: any) => {
     }, [props.getTodayList]);
   
     return <svg ref={svgRef}></svg>;
-    // return (
-    //     <>
-    //         {1235}
-    //     </>
-    // );
   };
 
   export default BarChart;

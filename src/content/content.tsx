@@ -12,26 +12,24 @@ import StatData from './statistics/statistics';
 import './content.scss'
 
 function Content() {
-    const [showList, setShowList] = useState<any[]>([]);
-    const [datas, setData] = useState<any[]>([]);
 
-    const [allDatas, setAllData] = useState<any[]>([]);
-    const [prevMonthDatas, setPrevMonthDatas] = useState<any[]>([]);
-    const [prevWeekDatas, setPrevWeekDatas] = useState<any[]>([]);
+    // 가져와야하는 데이터 저장소
+    const [allDatas, setAllData] = useState<any[]>([]); // 전체
+    const [prevMonthDatas, setPrevMonthDatas] = useState<any[]>([]); // 지난 달
+    const [prevWeekDatas, setPrevWeekDatas] = useState<any[]>([]); // 지난 주
+    const [predictionDatas, setPredictionDatas] = useState<any[]>([]); // 예측 데이터
 
-    // *
-    const [predictionDatas, setPredictionDatas] = useState<any[]>([])
-    
-    const [mode, setMode] = useState('close');
-    const [sido, setSido] = useState('');
-    const [station, setStation] = useState('');
+    const [mode, setMode] = useState('close'); // 검색 쪽 display
 
-    const [sidoList, setSidoList] =  useState<any[]>([]);
-    const [stationList, setStationList] = useState<any[]>([])
-    const [oneRow, setOneRow] = useState<any>([])
-    const [prevWeekRow, setPrevWeekRow] = useState<any>([])
-    const [prevMonthRow, setPrevMonthRow] = useState<any>([])
-    const [yesterDay, setYesterDay] = useState<any>([])
+    const [sido, setSido] = useState(''); // 시도
+    const [station, setStation] = useState(''); // 측정소
+
+    const [sidoList, setSidoList] =  useState<any[]>([]); // 시도 리스트
+    const [stationList, setStationList] = useState<any[]>([]); // 측정소 리스트
+    const [oneRow, setOneRow] = useState<any>([]); // 오늘의 정보 담은 행
+    const [prevWeekRow, setPrevWeekRow] = useState<any>([]); // 지난주 평균 정보를 담은 행
+    const [prevMonthRow, setPrevMonthRow] = useState<any>([]); // 지난달 정보를 담은 행
+    const [yesterDay, setYesterDay] = useState<any>([]); // 어제 데이터 
 
     // 자료 가져옴
     useEffect(() => {
@@ -39,62 +37,37 @@ function Content() {
         let url = "/today";
         fetch(url)
           .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            // console.log(data)
-            setAllData( data );
-          })
-          .catch((error) => {
-            console.log(error)
-        });
+                if (!response.ok) { throw new Error("Network response was not ok"); }
+                return response.json(); })
+          .then((data) => { setAllData( data ); })
+          .catch((error) => { console.log(error) }
+        );
 
         // 이전 데이터
         const date = new Date();
         const nowYear = date.getFullYear(); // 올해 설정
         const prevMonth = date.getMonth(); // 전월 데이터
-        // http://kkms4001.iptime.org:21168/month?date=2024-02
-        // http://kkms4001.iptime.org:21168/day?day=2025-02-21
-        // url = "/month?date=2025-01";
-        let ze='';
+        let ze=''; // 0설정
         if(prevMonth<10){ ze = '0'}
         url = `/month?month=${nowYear}-${ze}${prevMonth}`; // 올해 전 달
         fetch(url)
           .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            // console.log(data)
-            setPrevMonthDatas( data );
-          })
-          .catch((error) => {
-            console.log(error)
-        });
+                if (!response.ok) { throw new Error("Network response was not ok"); }
+                return response.json(); })
+          .then((data) => { setPrevMonthDatas( data ); })
+          .catch((error) => { console.log(error) }
+        );
 
-        // *
+        
         // 예측 데이터
         url = "/prediction";
-
         fetch(url)
             .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.json();
-            })
-            .then((data) => {
-                // console.log(data)
-                setPredictionDatas( data );
-            })
-            .catch((error) => {
-            console.log(error)
-        });
+                if (!response.ok) { throw new Error("Network response was not ok"); }
+                return response.json(); })
+            .then((data) => { setPredictionDatas( data ); })
+            .catch((error) => { console.log(error) }
+        );
     }, []);
 
     // 시도 리스트 설정
@@ -110,82 +83,51 @@ function Content() {
                 key: item.sidoName,
                 value: item.sidoName
             }));
-            console.log(list)
             setSidoList(list);
-            // setSidoList(dataList);
-
             // 처음 랜더시 나오는 데이터
-            if (dataList.length > 0) { 
-                setSido(dataList[0]["sidoName"])
-            }
+            if (dataList.length > 0) { setSido(dataList[0]["sidoName"]); }
     }, [allDatas]);
     
     // 측정소 리스트 설정 시도가 새로 설정 될시 실행됨
     useEffect(() => {
-        console.log( "시도" );
-        console.log( sido );
-
         let dataList: any[] = [];
         let query = 'SELECT * FROM ? '; // 기본
-        if(sido !== ''){
-            query+=`WHERE sidoName="${sido}" `; // ORDER BY stationName`;
-        }
+        if(sido !== ''){ query+=`WHERE sidoName="${sido}" `; }
         dataList = alasql(query,[allDatas]) ;
-
-        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-
-       const list = dataList.map((item) => ({
+        const list = dataList.map((item) => ({
                 key: item.sidoName,
                 value: item.sidoName
-            }));
+        }));
 
         setStationList( list );
-        // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
         if(dataList.length>0){
             const oneRow = dataList[0];
-
-            // console.log( "쿼리 생성 이후 넘기는 값인 한행 설정" );
-            // console.log( oneRow );
-            // console.log( oneRow["stationName"] );
             setStation(oneRow.stationName );
             setOneRow((prev: any) => oneRow );
         }
     }, [sido]);
 
     // 스테이션 변경시 가져오는 값들
-    useEffect(() => {
-        // console.log( "스테이션 설정됨" );
-        // console.log( station );
-
+    useEffect(() => { 
         let dataList: any[] = [];
         let query = "SELECT * FROM ? WHERE stationName = ?";
         dataList = alasql(query, [allDatas, station]) ;
 
         if (dataList.length > 0 ) {
-            // console.log( " 스테이션 설정후 뜨는 로고 오늘의 데이터를 가져옴 " );
-            // console.log( "오늘의 데이터를 가져왔습니다." );
-            // console.log( dataList[0] );
-            // 해당 스테이션의 오늘 값 설정
             setOneRow( dataList[0] );
 
             let url = "/week?stationName="+station;
+
             fetch(url)
                 .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.json();
-                })
-                .then((data) => {
-                    console.log("이전 7(6+오늘)일 연결완료");
+                    if (!response.ok) { throw new Error("Network response was not ok"); }
+                    return response.json(); })
+                .then((data) => { 
                     let list = [... data, dataList[0]];
-                    // console.log(list)
                     setPrevWeekDatas( list );
-                    setYesterDay(data[data.length-1])
-                })
-                .catch((error) => {
-                console.log(error)
+                    setYesterDay(data[data.length-1]) })
+                .catch((error) => { console.log(error)
             });
             
         }
@@ -205,22 +147,12 @@ function Content() {
         let query = "SELECT * FROM ? WHERE stationName = ?";
         prevData = alasql(query, [prevMonthDatas, station])
         if(prevData.length > 0){
-            // console.log( "지난 달 데이터를 가져왔습니다." );
-            // console.log(  prevData[0] )
             setPrevMonthRow( prevData[0] ); // 해당 스테이션 지난달 평균
         }
-    }, [oneRow]);
-    // 지난달 데이터를 가져오고
-    // 지난달 데이터가 설정되면 // 주 값 가져옴
-    
-    
-    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-    useEffect(()=>{
-       
-        if(prevWeekDatas.length > 0){
-            // console.log( "지난주 데이터 테이블이 생성되었습니다." );
-            // console.log(prevWeekDatas);
+    }, [oneRow]); 
 
+    useEffect(()=>{
+        if(prevWeekDatas.length > 0){
             let query = `SELECT 
             AVG(coValue),
             AVG(no2Value),
@@ -235,62 +167,41 @@ function Content() {
             }
         }
     },[prevWeekDatas]);
-    // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
     const giveStation=( itme: any)=>{
         setStation(itme);
     }
-
     
     return(
         <>
         <div className="mainContentArea" style={{display: 'flex'}}>
             <Left
-            getData={ allDatas }
-            getOneRow={ oneRow }
-            getPrevWeekRow={ prevWeekRow }
-            getPrevMonthRow={ prevMonthRow }
-            // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-            getYesterDay={yesterDay}
-            getPrevWeekDatas={ prevWeekDatas } />
-            {/* // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
+                getData={ allDatas }
+                getOneRow={ oneRow }
+                getPrevWeekRow={ prevWeekRow }
+                getPrevMonthRow={ prevMonthRow }
+                getYesterDay={ yesterDay }
+                getPrevWeekDatas={ prevWeekDatas } />
 
-            <Center getOneRow={ oneRow }
-            onSetStation={( reStstion: string )=>{ giveStation( reStstion) } }
-            // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-            onSetMode={(mode: string)=>{setMode( mode )}}
-            // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-            />
+            <Center
+                getOneRow={ oneRow }
+                onSetStation={( reStstion: string )=>{ giveStation( reStstion ) } }
+                onSetMode={(mode: string)=>{setMode( mode )}} />
+
             <Right
-            getData={ allDatas }
-            getOneRow={ oneRow }
-            onSidoList={sidoList}
-            onStation={station}
-            getPrediction={ predictionDatas }
-            getPrevWeekDatas={prevWeekDatas}/>
+                getData={ allDatas }
+                getOneRow={ oneRow }
+                onSidoList={ sidoList }
+                onStation={ station }
+                getPrediction={ predictionDatas }
+                getPrevWeekDatas={ prevWeekDatas } />
 
         </div>
-        {/* // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
-        {/* <div className="popUpContentArea">
-            <Popup getMode={mode} 
+        <StatData
+            getMode={ mode }
             getData={ allDatas }
-            // getSidoList = {sidoList}
-            onSidoList={sidoList}
-
-            onSetMode={(mode: string)=>{setMode( mode )}}
-            />
-        </div> */}
-        {/* // ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */}
-        {/* <div className='statisics'> */}
-            <StatData
-                getMode={mode}
-                getData={ allDatas }
-                onSidoList={sidoList}
-                onSetMode={(mode: string)=>{setMode( mode )}}
-
-            ></StatData>
-        {/* </div> */}
-
+            onSidoList={ sidoList }
+            onSetMode={(mode: string)=>{setMode( mode )}} />
         </>
     )
 }

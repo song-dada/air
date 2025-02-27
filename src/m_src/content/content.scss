@@ -1,0 +1,211 @@
+@import '../setting/color.scss';
+
+.mainContentArea {
+    width: 100%;
+    height: auto;
+
+    display: flex;
+        
+    flex-direction: column;
+    align-items: center;
+}
+
+// ******************************
+
+.leftArea {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    background-color: transparent;
+
+    .circlegraph {
+        padding: 10px;
+    
+        border-radius: 5px;
+        box-shadow: 1px 5px 4px rgb(168, 168, 168);
+        background-color: $color-body;
+    }
+}
+
+.centerArea {
+    flex: 1;
+    // width: 550px;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    background-color: transparent;
+
+    .mapArea {
+        height: 720px;
+        padding: 10px;
+    
+        border-radius: 5px;
+        box-shadow: 1px 5px 10px rgb(106, 106, 106);
+        background-color: $color-body;
+    }
+}
+
+.rightArea {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    background-color: transparent;
+}
+
+
+.select {
+    width: 80%; //800px
+    margin: 5% 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    select {
+        width: 100%;
+        height: 30px;
+        padding: 0 15px;
+
+        border-radius: 30px;
+        margin-right: 15px;
+    }
+
+    button {
+        width: 115px;
+        height: 30px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 30px;
+    }
+   }
+
+
+   .info .firstRow {
+    flex-wrap: wrap;
+    justify-content: center;
+   }
+
+   .info .secondRow {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    // flex-wrap: wrap;
+    justify-content: center;
+   }
+
+   .centerArea {
+    margin: 5% 0;
+    width: 90%;
+    height: 80%;
+   }
+
+   .titleArea {
+    text-align: justify;
+   }
+
+   .rightArea {
+    margin: 5% 0;
+   }
+
+   .alertArea {
+     width: 100%;
+     margin-top: 5% 0;
+   }
+
+
+   .info .firstRow .infoItem {
+        width: 190px;
+        height: 200px;
+    }
+
+    .info .firstRow .progress-text .circleminV {
+        position: absolute;
+        top: 63%;
+        left: 8%;
+        font-size: 10pt;
+    }
+   .info .firstRow .progress-text .circlemaxV {
+        position: absolute;
+        top: 63%;
+        left: 85%;
+        font-size: 10pt;
+   }
+// ******************************
+
+// @media (max-width: 480px) {
+//     header {
+//         width: 100%;
+//     }
+
+//     .didid {
+//         height: auto;
+        
+//         flex-direction: column;
+//         align-items: center;
+//     }
+
+//     .leftArea {
+//         order: 2;
+//         flex: 1;
+
+//         .inc {
+//             width: 100%;
+//             height: 290px;
+//         }
+//     }
+
+//     .centerArea {
+//         order: 1;
+
+//         .titleArea {
+//             width: calc(80% - 30px);
+//             height: 10px;
+//             margin-bottom: 0;
+            
+//             position: absolute;
+//             z-index: 2;
+//             top: 10%;
+//             left: 50%;
+//             transform: translate(-50%);
+//         }
+
+//         .mapArea {
+//             margin: 0;
+//             padding: 0;
+//             height: auto;
+
+//             background-color: transparent;
+//             box-shadow: none;
+//         }
+
+//         #map {
+//             width: 100%;
+//         }
+//     }
+
+//     .rightArea {
+//         order: 3;
+//         flex: 1;
+
+//         .linegraph {
+//             height: 310px;
+//         }
+//     }
+// }
