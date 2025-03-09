@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1&family=Gowun+Dodum&display=swap');
+@import './setting/color.scss';
+
+::-webkit-scrollbar {display: none;}
+* {margin: 0; padding: 0; text-decoration: none;}
+
+body {
+    width: 100vw;
+    height: 100vh;
+
+    font-family: "Gothic A1", serif;
+    font-weight: 400;
+    font-style: normal;
+    background: linear-gradient(to bottom, #f1f8ff 0%, #DAF4FF 90%) ;
+
+    text-decoration: none;
+    color: $color-font;
+}
+
+.App {
+  height: 100%;
+}
+
+.body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h3 {font-size: 13pt;}
+
+header {
+    font-family: "Gothic A1", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+@media (max-width: 480px) {
+    // html {
+    //     width: 100vw;
+    // }
+    html {
+        // background-color: aliceblue;
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: center;
+        width: 100vw;
+        left: 0;
+}
+}

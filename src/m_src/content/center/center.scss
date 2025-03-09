@@ -1,0 +1,53 @@
+@import '../../setting/color.scss';
+
+@mixin p-style {
+    font-size: 11pt;
+}
+
+.titleArea {
+    height: 50px;
+    border-radius: 5px;
+    background-color: $color-body;
+    box-shadow: 1px 5px 4px rgb(168, 168, 168);
+    padding: 30px 40px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+
+    p {
+        font-size: 1.1rem;
+    }
+}
+
+.titleSido {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+        @include p-style;
+        font-size: 14pt;
+        font-weight: bold;
+    }
+
+    p:nth-of-type(1) {
+        margin-right: 7px;
+    }
+}
+
+.clockArea {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    p {
+        @include p-style;
+        font-size: 10pt;
+    }
+
+    p:nth-of-type(1) {
+        margin-right: 10px;
+    }
+}

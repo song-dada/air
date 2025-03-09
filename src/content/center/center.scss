@@ -1,0 +1,83 @@
+@import '../../setting/color.scss';
+@import '../../setting/base.scss';
+
+@mixin p-style {
+    font-size: 11pt;
+}
+
+// 타이틀(지역이름 표기)
+.titleArea {
+    @include flexSetting(start, center);
+    height: 50px;
+    border-radius: 5px;
+    background-color: $color-body;
+    box-shadow: $shadowColor;
+    padding: 30px;
+
+    flex-direction: column;
+
+    position: relative;
+
+    p {
+        @include p-style;
+    }
+
+    >p {
+        margin-bottom: 5px;
+    }
+
+    button {
+        position: absolute;
+        right: 3%;
+        top: 60%;
+        width: 70px;
+    }
+}
+
+// 타이틀 시도 이름 표기
+.titleSido {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    p {
+        @include p-style;
+        font-size: 14pt;
+        font-weight: bold;
+    }
+
+    p:nth-of-type(1) {
+        margin-right: 7px;
+    }
+}
+
+// 지도 안쪽 시계
+.clockArea {
+    @include flexSetting(center, end);
+
+    p {
+        @include p-style;
+        font-size: 10pt;
+    }
+
+    p:nth-of-type(1) {
+        margin-right: 10px;
+    }
+}
+
+// 타이틀쪽 검색박스
+.centerSelectArea{
+    padding-top: 5px;
+    .centerSelect  {
+        width: 150px;
+        height: 25px;
+        padding: 0 15px;
+    
+        border-radius: 10px;
+        margin-right: 15px;
+    
+        border: 1px solid #81808d;
+        color: $color-font;
+    }
+    
+}
