@@ -1,0 +1,76 @@
+@import '../../setting/color.scss';
+@import '../../setting/base.scss';
+
+// 원형 그래프 : info파일 내부
+
+// 범례
+.legend{
+    @include flexSetting(center, center);
+    margin-top: 15px;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+
+    .oneCell{
+        flex: 1;
+        background-color: #fff;
+        text-align: center;
+
+        .stateColor{
+            height: 7px;
+            background-color: blue;
+        }
+        .blue{
+            background-color: $color-graphB;
+        }
+        .green{
+            background-color: $color-graphG;
+        }
+        .orange{
+            background-color: $color-graphY;
+        }
+        .red{
+            background-color: $color-graphR;
+        }
+    }
+}
+
+// 증감
+.etcArea {
+    @include innerGraphArea(90px);
+        
+    font-size: 10pt;
+}
+
+.etcArea h3 {
+    margin-bottom: 10px;
+    color: $color-font;
+}
+
+.etcA {
+    display: flex;
+    gap: 10px;
+    
+    .etc {
+        flex: 1;
+
+        .etcV {
+            padding: 0 10px;
+
+            div {
+                margin-bottom: 5px;
+                font-size: 12pt;
+            }
+        }
+    }
+}
+
+
+// 주간 그래프
+.weekgraph {
+    @include innerGraphArea(230px);
+
+    .App {
+        height: 100%;
+    }
+}

@@ -1,0 +1,191 @@
+@import '../../setting/base.scss';
+@import '../../setting/color.scss';
+
+// 기본 스타일
+.listSky {
+    width: 90vw;
+    margin: 15px 0;
+    top: 0;
+    position: absolute;
+    z-index: 4;
+    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.listTitle {
+    width: 90%;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    .listClose {
+        position: absolute;
+        right: 0;
+    }
+}
+
+h2 {
+    margin: 15px 0;
+}
+
+.locationSearch {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 5px;
+
+    span {
+        margin-right: 10px;
+    }
+}
+.timeSearch {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    span {
+        margin-right: 10px;
+    }
+    
+}
+
+// 선택 영역
+.selectArea {
+    background-color: #f0f3f8;
+    width: calc(100% - 40%);
+    height: 150px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+
+    padding: 0 15%;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+    .liout { //지역,조회기간 밖 전체
+        display: flex;
+    }
+
+}
+
+// 테이블 스타일
+.listTable {
+    width: 80%;
+    
+    h3 {
+        margin-bottom: 10px;
+    }
+    
+    .listData {
+        height: 480px; //줄당 30px
+        overflow: auto;
+        border: 1px solid #dad9e4;
+        margin-bottom: 15px;
+
+    }
+
+}
+
+.timeSearch > button {
+    margin-right: 15px;
+    
+}
+.label {
+    display: flex;
+}
+label {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+
+    span {
+        margin-left: 3px;
+    }
+}
+
+button {   //버튼 태그
+    width: 80px;
+    height: 32px;
+    padding: 5px;
+
+    background-color: #d5e1f0;
+    // background-color: #8aafff;
+    border: none;
+    border-radius: 5px;
+
+}
+
+select  { // 지역 검색
+    width: 23%;
+    height: 30px;
+    padding: 0 15px;
+
+    border-radius: 10px;
+    margin-right: 15px;
+
+    border: 1px solid #81808d;
+    color: #333;
+}
+
+#prev, #now { // 날자 검색
+    width: 20%;
+    height: 30px;
+    padding: 0 15px;
+
+    border-radius: 10px;
+    margin-right: 15px;
+
+    border: 1px solid #81808d;
+    color: #333;
+}
+
+
+// 기본 테이블 스타일
+table {
+    width: 100%;
+    border-collapse: collapse;
+    // margin: 20px 0;
+    font-family: Arial, sans-serif;
+  
+    th,
+    td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ddd;
+      width: 80px;
+      height: 20px;
+    }
+  
+    th {
+      background-color: #f0f3f8;
+      font-weight: bold;
+      color: #333;
+    }
+  
+    td {
+      background-color: #fff;
+      color: #555;
+    }
+  
+    tr:nth-child(even) td {
+      background-color: #f9f9f9;
+    }
+  
+  }
+
+
+
+.dataNotice {
+  background-color: "#f8f9fa";
+  border: "1px solid #ddd";
+  border-radius: "4px";
+  padding: "10px";
+  margin: "10px 0"; 
+  font-size: "14px";
+  color: "#505050";
+}

@@ -1,0 +1,10 @@
+@import '../../../setting/color.scss';
+
+.linegraph {
+    height: 300px;
+    padding: 10px;
+
+    background-color: $color-body;
+    border-radius: 5px;
+    box-shadow: 1px 5px 4px rgb(168, 168, 168);
+}
